@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui/semantic.css">
+</head>
+
+<body>
+	
+	<div class="ui container" ng-controller="control">
+		<div class="ui segment">
+			<h2 ng-show="isChecked">哒哒啦</h2>
+			<div class="ui checkbox">
+				<input type="checkbox" ng-model="isChecked">
+				<label>要显示</label>
+			</div>
+		</div>
+	</div>
+	
+	<script src="lib/angular-1.2.18.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui/semantic.min.js"></script>
+	<script>
+		var control=function($scope){
+			$scope.isChecked=false;
+		};
+	</script>
+	
+</body>
+</html>
+

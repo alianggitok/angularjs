@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui/semantic.css">
+</head>
+
+<body>
+	
+	<div class="ui container" ng-controller="control">
+		<div class="ui segment">
+			<div class="ui form">
+				<div class="field">
+					<input type="text" ng-model="info.name" placeholder="your name">
+				</div>
+				<div class="field">
+					<input type="text" ng-model="info.age" placeholder="your age">
+				</div>
+
+				<p>Hello {{info.name}}, you're {{info.age}} years old!</p>
+				<p>{{info.notice}}</p>
+			</div>
+		</div>
+	</div>
+	
+	<script src="lib/angular-1.2.18.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui/semantic.min.js"></script>
+	<script>
+		var control=function($scope){
+			$scope.info={
+				name:'Warren',
+				age:'32',
+				notice:'人类'
+			};
+			
+			$scope.$watch('info.age',function(){
+				if($scope.info.age<18){
+					$scope.info.notice='少年';
+				}else if($scope.info.age<40){
+					$scope.info.notice='青年';
+				}else if($scope.info.age<60){
+					$scope.info.notice='老家伙';
+				}else if($scope.info.age>=60){
+					$scope.info.notice='垂死';
+				}
+			});
+		};
+	</script>
+	
+</body>
+</html>
+
