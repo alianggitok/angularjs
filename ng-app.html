@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container" ng-controller="hello">
+		<div class="ui segment">
+			<p>{{name}}<br>
+			{{age}}</p>
+
+			<p><div class="ui input"><input type="text" ng-model="obj.second"></div></p>
+			<p>{{obj}}</p>
+		</div>
+	</div>
+
+	<script src="lib/angular-1.2.18.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui/semantic.min.js"></script>
+	<script>
+		var app=angular.module('demo',[]);
+
+		app.controller('hello',[
+			'$scope',
+			function hello($scope){
+				$scope.name="Jack";
+
+				$scope.obj={
+					first:1,
+					second:2
+				}
+			}
+		]);
+
+		app.run(function($rootScope){
+			$rootScope.name="Warren";
+			$rootScope.age="32";
+		});
+
+	</script>
+
+</body>
+</html>
+

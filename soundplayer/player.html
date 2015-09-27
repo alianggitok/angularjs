@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../lib/semantic-ui/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container" ng-controller="playerControl">
+		<div class="ui segment">
+			<select ng-model="player.selectedSrc" ng-change="player.loadSrc(player.selectedSrc)" ng-options="item.src as item.text for item in player.list"></select>
+			<p>selected: {{player.selectedSrc}}</p>
+			<button class="ui button" ng-click="player.play()" ng-show="!player.playing">Play</button>
+			<button class="ui button" ng-click="player.stop()" ng-show="player.playing">Stop</button>
+		</div>
+	</div>
+
+	<script src="../lib/angular-1.3.13.min.js"></script>
+	<script src="../lib/jquery-1.11.2.min.js"></script>
+	<script src="../lib/semantic-ui/semantic.min.js"></script>
+	<script>
+
+		var app=angular.module('app',[]);
+
+		app.controller('playerControl',[
+			'$scope',
+			function($scope){
+				//init
+				$scope.player={
+					audio:document.createElement('audio'),
+					playing:false,
+					list:[
+						{src:'wish-you-well.mp3',text:'wish you well'},
+						{src:'love\'s-go-away.mp3',text:'爱走了后'}
+					]
+				};
+				//default
+				$scope.player.audio.src=$scope.player.list[1].src;
+				$scope.player.selectedSrc=$scope.player.list[1].src;
+
+				//player control
+				$scope.player.loadSrc=function(src){
+					$scope.player.audio.src=src;
+					$scope.player.selectedSrc=src;
+				};
+				$scope.player.play=function(){
+					$scope.player.audio.play();
+					$scope.player.playing=true;
+				};
+				$scope.player.stop=function(){
+					$scope.player.audio.pause();
+					$scope.player.playing=false;
+				};
+			}
+
+
+		]);
+
+
+	</script>
+
+</body>
+</html>
+
