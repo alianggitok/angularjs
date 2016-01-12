@@ -9,10 +9,18 @@
 		{{words.text}}!
 	</div>
 	
-	<script src="lib/jquery-1.11.2.min.js"></script>
-	<script src="lib/angular-1.2.18.min.js"></script>
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
 	
-	<script src="js/helloworld.js"></script>
+	<script>
+	var module=angular.module('demo', []);
+
+	module.controller('hello',function hello($scope){
+		$scope.words={
+			text:'Hello angular'
+		};
+	});
+
+	</script>
 	
 </body>
 </html>

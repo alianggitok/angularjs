@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing" ng-controller="formCtrl">
+	
+		<p my-time="format"></p>
+		
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.controller('formCtrl',function($scope){
+			$scope.format='M/d/yy h:mm:ss a';
+
+		});
+		
+		app.directive('myTime',function($timeout,dateFilter){
+			return function($scope,elem,attrs){
+				var format,
+					timeoutId;
+				
+				function updateTime(){
+					elem.text(dateFilter(new Date(),format));
+				}
+				
+				$scope.$watch(attrs.myTime,function(value){
+					format=value;
+					updateTime();
+				});
+				
+				function updateLater(){
+					timeoutId=$timeout(function(){
+						updateTime();
+						updateLater();
+					},1000);
+				}
+				
+				elem.bind('$destory',function(){
+					$timeout.cancel(timeoutId);
+				});
+				
+				updateLater();
+			};
+		});
+	</script>
+	
+</body>
+</html>
+

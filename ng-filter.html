@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing" ng-controller="ctrl">
+
+		<p class="ui segment">
+			{{'World'|greet}}<br>
+			{{strings.number|number:2}}<br>
+			{{strings.number|currency}}<br>
+			{{strings.string|uppercase}}<br>
+		</p>
+
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.controller('ctrl',function($scope){
+			$scope.strings={
+				number:'123',
+				string:'abc'
+			};
+
+		});
+		app.filter('greet',function(){
+			//这里是自定义过滤器的业务代码
+			return function(text){
+				return 'Hello, '+text+'!';
+			};
+		});
+	</script>
+	
+</body>
+</html>
+

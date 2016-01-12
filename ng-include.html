@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing" ng-controller="controller">
+		
+		<div class="ui segment">
+			<ng-include src="includeSrc()"></ng-include>
+		</div>
+		
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.controller('controller',function($scope){
+			$scope.includeSrc=function(){
+				return './tmpl/header.html';
+			};
+
+		});
+	</script>
+	
+</body>
+</html>
+

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+	
+	<div class="ui container" ng-controller="controller">
+		<div class="ui menu">
+			<a class="item" href="#view-1" data-name="view-1">view1</a>
+			<a class="item" href="#view-2?b=2" data-name="view-2">view2</a>
+			<a class="item" href="#invalid" data-name="invalid">invalid link</a>
+		</div>
+		<div id="content" class="ui segment">
+			<div ng-view></div>
+		</div>
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/angular-1.2.28/angular-route.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.min.js"></script>
+	<script>
+		var routeConfig=[
+				{name:'view-1',url:'/view-1',tmplUrl:'tmpl/view-1.html',ngController:'view-1-controller'},
+				{name:'view-2',url:'/view-2',tmplUrl:'tmpl/view-2.html',ngController:'view-2-controller'},
+			],
+			app=angular.module('app',['ngRoute']);
+		
+		//主控制器
+		app.controller('controller',function($scope){
+			//初始化ui等
+			$('.menu .item').tab();
+			
+			//route事件，也可以写到 app.run() 中
+//			$scope.$on('$routeChangeStart',function(event,next,current){
+//				$('#content').addClass('loading');
+//				$('.menu .item').siblings().removeClass('active');
+//				$('.menu .item[data-name='+next.menuItemName+']').addClass('active');
+//				console.log('>> '+next.templateUrl+' is loading...');
+//			});
+//			$scope.$on('$routeChangeSuccess',function(event,current,previous){
+//				$('#content').removeClass('loading');
+//				console.log('   '+current.loadedTemplateUrl+' loaded!');
+//			});
+		});
+		
+		//路由配置
+		app.config(function($routeProvider,$locationProvider){
+			
+			for(var i=0,len=routeConfig.length;i<len;i+=1){
+				$routeProvider.when(routeConfig[i].url,{
+					templateUrl:routeConfig[i].tmplUrl,
+					controller:routeConfig[i].ngController,
+//					menuItemName:routeConfig[i].name//自定义的属性
+				});
+			}
+			
+			$routeProvider.when('/',{
+				templateUrl:routeConfig[0].tmplUrl,
+				controller:routeConfig[0].ngController,
+//				menuItemName:routeConfig[0].name
+			}).otherwise({
+				templateUrl:'tmpl/404.html',
+			});
+			
+			//是否以 pushState 方式来进行路由
+//			$locationProvider.html5Mode(true);
+			
+		});
+		
+		//route事件
+//		app.run(function($rootScope,$location){
+//			...
+//		});
+		
+		//view控制器
+		app.controller('view-1-controller',function($scope,$routeParams){
+			$scope.params=$routeParams;//url中的参数，如http://.../#view?a:1
+		}).controller('view-2-controller',function($scope,$routeParams){
+			$scope.params=$routeParams;
+		});
+		
+	</script>
+	
+</body>
+</html>
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing" novalidate ng-controller="formCtrl">
+	
+		<form class="ui segment form">
+			<div class="field">
+				<label>First Name</label>
+				<input type="text" name="first-name" ng-model="firstName" placeholder="First Name">
+			</div>
+			<div class="field">
+				<label>Last Name</label>
+				<input type="text" name="last-name" ng-model="lastName" placeholder="Last Name">
+			</div>
+			
+			<div class="ui divider"></div>
+			<button class="ui primary button" ng-click="submit()">Submit</button>
+			<button class="ui button" ng-click="reset()">Reset</button>
+			
+		</form>
+		
+		<div class="ui segment" ng-show="infoShow">Hello, {{submits.firstName+' '+submits.lastName}}!</div>
+		
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.controller('formCtrl',function($scope){
+			var defaults={
+				firstName:'Warren',
+				lastName:'Chen'
+			};
+			$scope.submits={
+				firstName:'',
+				lastName:''
+			};
+			$scope.infoShow=false;
+			
+			$scope.submit=function(){
+				$scope.submits={
+					firstName:$scope.firstName,
+					lastName:$scope.lastName
+				};
+				$scope.infoShow=true;
+			};
+			$scope.reset=function(){
+				$scope.firstName=defaults.firstName;
+				$scope.lastName=defaults.lastName;
+				$scope.infoShow=false;
+			};
+			$scope.reset();
+
+		});
+		
+	</script>
+	
+</body>
+</html>
+

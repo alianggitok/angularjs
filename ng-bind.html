@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+	
+	<div class="ui container" ng-controller="control">
+		<p><b ng-bind="'{\{\}}'"></b>: {{text}}</p>
+		<p><b>ng-bind:</b> <span ng-bind="text"></span></p>
+		<p><b>ng:bind:</b> <span ng:bind="text"></span></p>
+		<p><b>data-ng-bind:</b> <span data-ng-bind="text"></span></p>
+		<p><b>x-ng-bind:</b> <span x-ng-bind="text"></span></p>
+		<p><b>class:</b> <span class="ng-bind:text"></span></p>
+		<p></p>
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		
+		var control=function($scope){
+			$scope.text='what?';
+		};
+	</script>
+	
+</body>
+</html>
+

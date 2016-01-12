@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+	
+	<div class="ui container" ng-controller="controller">
+		<div class="ui menu">
+			<a class="item" ui-sref="view-1">view1</a>
+			<a class="item" ui-sref="view-2">view2</a>
+			<a class="item" ui-sref="other">other</a>
+		</div>
+		<div ui-view class="ui segment"></div>
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/angular-ui-router.0.2.15/angular-ui-router.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.min.js"></script>
+	<script>
+		var app=angular.module('app',['ui.router']);
+		
+		//主控制器
+		app.controller('controller',function($scope){
+			$('.menu .item').tab();
+		});
+		
+		//路由配置
+		app.config(function($stateProvider){
+			$stateProvider.state('view-1',{
+				url:'/view-1',
+				templateUrl:'tmpl/view-1.html',
+				controller:'view-1-controller'
+			}).state('view-2',{
+				url:'/view-2',
+				templateUrl:'tmpl/view-2.html',
+				controller:'view-2-controller'
+			}).state('other',{
+				url:'/other',
+				template:'<b>nothing</b>'
+			});
+		});
+		
+		//view控制器
+		app.controller('view-1-controller',function($scope){
+			
+		}).controller('view-2-controller',function($scope){
+			
+		});
+		
+		
+	</script>
+	
+</body>
+</html>
+
