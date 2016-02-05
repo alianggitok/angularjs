@@ -1,4 +1,23 @@
 <div>
 	view-2<br>
 	{{params}}
+	
+	<table class="ui segment celled striped selectable unstackable table">
+		<thead>
+			<tr>
+				<th class="collapsing">#</th>
+				<th>ID</th>
+				<th>LoginName</th>
+				<th>URL</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="row in data">
+				<td class="collapsing">{{$index+1}}</td>
+				<td>{{row.id}}</td>
+				<td>{{row.login}}</td>
+				<td><a href="{{row.html_url}}" target="_blank">{{row.html_url}}</a></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
