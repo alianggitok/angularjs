@@ -8,9 +8,9 @@
 
 <body>
 
-	<div class="ui container clearing" novalidate ng-controller="formCtrl">
+	<div class="ui container clearing" ng-controller="formCtrl">
 	
-		<form class="ui segment form">
+		<form class="ui segment form" novalidate ng-submit="submit()">
 			<div class="field">
 				<label>First Name</label>
 				<input type="text" name="first-name" ng-model="firstName" placeholder="First Name">
@@ -21,8 +21,8 @@
 			</div>
 			
 			<div class="ui divider"></div>
-			<button class="ui primary button" ng-click="submit()">Submit</button>
-			<button class="ui button" ng-click="reset()">Reset</button>
+			<button class="ui primary button" type="submit">Submit</button>
+			<button class="ui button" type="button" ng-click="reset()">Reset</button>
 			
 		</form>
 		

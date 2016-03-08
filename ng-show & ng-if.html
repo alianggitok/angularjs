@@ -8,24 +8,28 @@
 
 <body>
 	
-	<div class="ui container" ng-controller="control">
+	<div class="ui container">
 		<div class="ui segment">
-			<h2 ng-show="isChecked">哒哒啦</h2>
+			ng-show 相当于 display:none/display:--<br>
 			<div class="ui checkbox">
-				<input type="checkbox" ng-model="isChecked">
+				<input type="checkbox" ng-model="visible">
 				<label>要显示</label>
 			</div>
+			<b ng-show="visible">★</b>
+		</div>
+		<div class="ui segment">
+			ng-if 相当于 remove/append<br>
+			<div class="ui checkbox">
+				<input type="checkbox" ng-model="hold">
+				<label>要显示</label>
+			</div>
+			<b ng-if="hold">■</b>
 		</div>
 	</div>
 	
 	<script src="lib/angular-1.2.28/angular.min.js"></script>
 	<script src="lib/jquery-1.11.2.min.js"></script>
 	<script src="lib/semantic-ui-2.1.6/semantic.min.js"></script>
-	<script>
-		var control=function($scope){
-			$scope.isChecked=false;
-		};
-	</script>
 	
 </body>
 </html>

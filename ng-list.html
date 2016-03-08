@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing">
+	
+		<form class="ui segment form" novalidate>
+			<div class="field">
+				<label>text（分隔符“|”）</label>
+				<input type="text" ng-model="text1" ng-list="|">
+			</div>
+			<div class="ui divider"></div>
+			输出：{{text1}}
+		</form>
+		
+		<form class="ui segment form" novalidate>
+			<div class="field">
+				<label>text（分隔符 空格）</label>
+				<input type="text" ng-model="text2" ng-list="/\s/">
+			</div>
+			<div class="ui divider"></div>
+			输出：{{text2}}
+		</form>
+		
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	
+</body>
+</html>
+

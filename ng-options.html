@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+	
+	<div class="ui basic segment container" ng-controller="control">
+		<div class="ui header large">ng-options</div>
+		<div class="ui segment red">
+			<!--
+				label for item in data
+				label是可以被当做ng表达式来做渲染的
+			-->
+			<p>
+				<select class="ui dropdown" ng-model="selectedArray" ng-options="item+'★' for item in array">
+					<option value="">请选择</option>
+				</select>
+				<i><b>item</b>+'★' for <b>item</b> in <b>array</b></i>
+			</p>
+
+			<hr class="ui divider">
+			
+			<p>
+				<select class="ui dropdown" ng-model="selectedList" ng-options="item.name for item in list">
+					<option value="">请选择</option>
+				</select>
+				<i><b>item.name</b> for <b>item</b> in <b>list</b></i>
+			</p>
+			
+		</div>
+		
+		
+		<div class="ui segment blue">
+			<!--
+				beModel as label for (beModel,item) in data
+				beModel 将关联到 model，在array中它是一个自动生成的整数索引
+			-->
+			<p>
+				<select class="ui dropdown" ng-model="selectedArray" ng-options="index as item for (index,item) in array">
+					<option value="">请选择</option>
+				</select>
+				<i><b>index</b> as <b>item</b> for <b>(index,item)</b> in <b>array</b></i>
+			</p>
+			
+			<hr class="ui divider">
+			
+			<!--
+				beModel as label for item in data
+			-->
+			<p>
+				<select class="ui dropdown" ng-model="selectedList" ng-options="item as item.name for item in list">
+					<option value="">请选择</option>
+				</select>
+				<i><b>item</b> as <b>item.name</b> for <b>item</b> in <b>list</b></i><br>
+				<select class="ui dropdown" ng-model="selectedList" ng-options="item.value as item.name for item in list">
+					<option value="">请选择</option>
+				</select>
+				<i><b>item.name</b> as <b>item.value</b> for <b>item</b> in <b>list</b></i>
+			</p>
+			
+		</div>
+		
+		<div class="ui segment yellow">
+			<!--
+				beModel as label group by group for item in data
+				group by用以分组option项
+			-->
+			<p>
+				<select class="ui dropdown" ng-model="selectedList" ng-options="item.value as item.name group by item.gender for item in list">
+					<option value="">请选择</option>
+				</select>
+				<i><b>item.value</b> as <b>item.name</b> group by <b>item.gender</b> for <b>item</b> in <b>list</b></i>
+			</p>
+		</div>
+		
+		<div class="ui segment pink">
+			<!--
+				label for (key , subObj) in object
+				subObj.key for (key , subObj) in object
+			-->
+			<p>
+				<select class="ui dropdown" ng-model="selectedObject" ng-options="key for (key,subObj) in object">
+					<option value="">请选择</option>
+				</select>
+				<i><b>key</b> for <b>(key,subObj)</b> in <b>object</b></i>
+			</p>
+		</div>
+		
+
+		
+		<div class="ui teal inverted segment">
+			model <b>selectedArray</b>: {{selectedArray}}<br>
+			model <b>selectedList</b>: {{selectedList}}<br>
+			model <b>selectedObject</b>: {{selectedObject}}
+		</div>
+		
+		<div class="ui secondary segment">
+			<h3>data</h3>
+			<p>$scope.array=[ '蒙其·D·魯夫', '羅羅亞·索隆', '娜美', '騙人布', '香吉士', '多尼多尼·喬巴', '妮可·羅賓', '佛朗基', '布魯克' ];</p>
+			<p>
+				$scope.list=[<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;{name:'one',value:11,gender:'man'},<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;{name:'two',value:22,gender:'woman'},<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;{name:'three',value:33,gender:'woman'},<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;{name:'four',value:44,gender:'man'},<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;{name:'five',value:55,gender:'man'},<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;{name:'six',value:66,gender:'man'}<br>
+				];
+			</p>
+			<p>
+				$scope.object={<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;'first':{name:'one',value:11,gender:'man'},<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;'second':{name:'two',value:22,gender:'woman'},<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;'third':{name:'three',value:33,gender:'woman'}<br>
+				};
+			</p>
+		</div>
+
+		
+	</div>
+	
+	
+	
+	
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		$('.ui.dropdown').dropdown();
+		
+		var control=function($scope){
+			$scope.array=[ '蒙其·D·魯夫', '羅羅亞·索隆', '娜美', '騙人布', '香吉士', '多尼多尼·喬巴', '妮可·羅賓', '佛朗基', '布魯克' ];
+			
+			$scope.list=[
+				{name:'one',value:11,gender:'man'},
+				{name:'two',value:22,gender:'woman'},
+				{name:'three',value:33,gender:'woman'},
+				{name:'four',value:44,gender:'man'},
+				{name:'five',value:55,gender:'man'},
+				{name:'six',value:66,gender:'man'}
+			];
+			
+			$scope.object={
+				'first':{name:'one',value:11,gender:'man'},
+				'second':{name:'two',value:22,gender:'woman'},
+				'third':{name:'three',value:33,gender:'woman'}
+			};
+			
+				
+			
+		};
+	</script>
+	
+</body>
+</html>
+

@@ -9,22 +9,21 @@
 <body>
 	
 	<div class="ui container" ng-controller="control">
+		
 		<table class="ui celled striped selectable unstackable table">
 			<thead>
-				<tr ng-init="init()">
-					<th class="collapsing"><div class="ui fitted all checkbox"><input type="checkbox"></div></th>
+				<tr>
 					<th class="collapsing">#</th>
-					<th>Title</th>
-					<th>Value</th>
+					<th>Name</th>
+					<th>Age</th>
 					<th>Mark</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="row in list" ng-init="init()">
-					<td class="collapsing"><div class="ui fitted single checkbox"><input type="checkbox"></div></td>
+				<tr ng-repeat="row in list"><!--看这里 filter:search-->
 					<td class="collapsing">{{$index+1}}</td>
-					<td>{{row.title}}</td>
-					<td>{{row.value}}</td>
+					<td>{{row.name}}</td>
+					<td>{{row.age}}</td>
 					<td>{{row.mark}}</td>
 				</tr>
 			</tbody>
@@ -38,36 +37,16 @@
 		
 		var control=function($scope){
 			$scope.list=[
-				{title:'one',value:11,mark:'nothing'},
-				{title:'two',value:22,mark:'nothing'},
-				{title:'three',value:33,mark:'nothing'},
-				{title:'four',value:44,mark:'nothing'},
-				{title:'five',value:55,mark:'nothing'},
-				{title:'six',value:66,mark:'nothing'}
+				{name:'one',age:11,mark:'nothing'},
+				{name:'two',age:22,mark:'nothings'},
+				{name:'three',age:33,mark:'nothing'},
+				{name:'four',age:44,mark:'nothings'},
+				{name:'five',age:55,mark:'nothing'},
+				{name:'six',age:66,mark:'nothing'}
 			];
-			$scope.init=function(){
-				var allCheckbox=$('.ui.table .ui.all.checkbox'),
-					 singleCheckboxes=$('.ui.table .ui.single.checkbox'),
-					 checkedLength=0,
-					 allChecked=false;
+			
 				
-				singleCheckboxes.checkbox({
-					onChange:function(){
-						checkedLength=0;
-						for(var i=0,len=singleCheckboxes.length; i<len; i+=1){
-							if(singleCheckboxes.eq(i).checkbox('is checked')){
-								checkedLength+=1;
-							}
-						}
-						if(checkedLength>=singleCheckboxes.length){
-							allChecked=true;
-						}
-						console.log(singleCheckboxes.length,checkedLength,allChecked)
-					}
-				});
-				
-				
-			};
+			
 		};
 	</script>
 	

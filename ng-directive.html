@@ -8,11 +8,28 @@
 
 <body>
 
-	<div class="ui container clearing" ng-controller="formCtrl">
+	<div class="ui container segment basic clearing" ng-controller="control">
 	
-		<p my-time="format"></p>
+<!--
+		<my-directive></my-directive>
+		<div class="my-directive:''"></div>
+-->
+		<h3 class="ui top attached header">basic</h3>
+		<div class="ui bottom attached segment">
+			<div my-first=""></div>
+		</div>
 		
+		<h3 class="ui top attached header">template</h3>
+		<div class="ui bottom attached segment">
+			<span my-second="" type="A"></span>
+		</div>
+		
+		<h3 class="ui top attached header">ng-transclude</h3>
+		<div class="ui bottom attached segment">
+			<div my-third="">I'm {{name}}. <b>I'm here.</b></div>
+		</div>
 	</div>
+	
 	
 	<script src="lib/angular-1.2.28/angular.min.js"></script>
 	<script src="lib/jquery-1.11.2.min.js"></script>
@@ -20,37 +37,68 @@
 	<script>
 		var app=angular.module('app',[]);
 
-		app.controller('formCtrl',function($scope){
-			$scope.format='M/d/yy h:mm:ss a';
-
+		app.controller('control',function($scope){
+			$scope.str='blablabla……';
+			$scope.name='Warren';
+			$scope.msg='yes?'
 		});
 		
-		app.directive('myTime',function($timeout,dateFilter){
-			return function($scope,elem,attrs){
-				var format,
-					timeoutId;
+		app.directive('myFirst',function(){
+			return {
+				scope:false,
+					//值为true、false、{}（空对象），默认false
+					//false，子作用域继承父作用域，父子作用域变化相互影响
+					//true，子作用域继承父作用域，子作用域变化不影响父作用域
+					//{}，创建新的隔离的作用域，父子互不影响
+					//{key:value}，创建隔离作用域，设置绑定在该指令上的独立作用域
+				restrict:'ECA',
+					//设定以何种方式在html中书写，E元素标签形式，A属性形式，C类名形式
+				priority:1001,
+					//优先级，在一个元素上有多个指令时，该指令的优先等级，值越小，优先级越高
+				terminal:false,
+					//如果为true，则优先级低于该指令的其他指令无效
+				template:'I have a story, {{name}}!<br><span ng-bind="words"></span><br>'+
+						'{{name}}<br>'+
+						'<input ng-model="name"><br>'+
+						'{{msg}}',
+					//模板，可以套用ng的语法，也可以是函数
+//				templateUrl:'tmpl/header.html',
+					//指向模板文件，与template不可并存
+				replace:false,//默认false，不推荐修改
+				link:function($scope,elem,attr){
+					$scope.words='Long long ago...';
+					console.log('-->link:');
+					console.log('\t',attr);
+				},
+				controller:function($scope,$element,$attrs,$transclude){//也可以是外部注册的controller名
+					//该项不推荐，与link的区别在，controller可以指定外部控制器，有利于代码的复用
+					//$scope 该指令对应元素所在的作用域
+					//$element 该指令对应的元素
+					//$attrs 该指令对应元素的属性
+					//$transclude 
+					$scope.msg='aaa';
+				},
+				controllerAs:'directiveController'//与conroller连用，设置别名
 				
-				function updateTime(){
-					elem.text(dateFilter(new Date(),format));
+			};
+		}).directive('mySecond',function(){
+			return {
+				template:function(elem,attr){
+					var html='Type is '+attr.type+'.';
+					console.log('-->template:')
+					console.log('\t','The Element\'s attributes are');
+					console.log('\t\t',attr);
+					console.log('\t','The Element is');
+					console.log('\t\t',elem);
+					return html;
 				}
-				
-				$scope.$watch(attrs.myTime,function(value){
-					format=value;
-					updateTime();
-				});
-				
-				function updateLater(){
-					timeoutId=$timeout(function(){
-						updateTime();
-						updateLater();
-					},1000);
-				}
-				
-				elem.bind('$destory',function(){
-					$timeout.cancel(timeoutId);
-				});
-				
-				updateLater();
+			};
+		}).directive('myThird',function(){
+			return {
+				transclude:true,
+					//打开transclude模式
+				template:'Lalala, <span ng-transclude></span>'//一个指令只能有一个ng-ransclude
+					//含有该指令的标签中，原有内容会被放入模板的带有ng-transclude指令的标签内
 			};
 		});
 	</script>

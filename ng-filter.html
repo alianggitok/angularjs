@@ -10,12 +10,81 @@
 
 	<div class="ui container clearing" ng-controller="ctrl">
 
-		<p class="ui segment">
+		<div class="ui segment">
 			{{'World'|greet}}<br>
-			{{strings.number|number:2}}<br>
+			{{strings.number|number:5}}<br>
 			{{strings.number|currency}}<br>
 			{{strings.string|uppercase}}<br>
-		</p>
+			{{strings.date|date:'yyyy年MM月dd日'}}<br>
+		</div>
+		
+		<div class="ui segment">
+			<div>
+				搜索
+				<div class="ui input">
+					<input type="text" ng-model="search.$" placeholder="全局搜索">
+				</div>
+				<div class="ui input">
+					<input type="text" ng-model="search.name" placeholder="姓名">
+				</div>
+				<div class="ui input">
+					<input type="text" ng-model="search.age" placeholder="年龄">
+				</div>
+			</div>
+
+			<table class="ui celled striped selectable unstackable table">
+				<thead>
+					<tr>
+						<th class="collapsing">#</th>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Mark</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in array|orderBy:'-age'|filter:search|limitTo:4">
+						<!--看这里
+							orderBy:'age' 正序排列，如果倒叙就是'-age'
+							filter:search 关联搜索 model
+							limitTo:4 限定显示条目数为4条，这个指令的放置顺序关系到输出结果，
+									譬如，放在orderBy之前，则会对排序后的结果做筛列
+									所以，limitTo一般都是放在所有筛查条件之后
+						-->
+						<td class="collapsing">{{$index+1}}</td>
+						<td>{{row.name}}</td>
+						<td>{{row.age}}</td>
+						<td>{{row.mark}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		
+		
+		<div class="ui segment">
+			<table class="ui celled striped selectable unstackable table">
+				<thead>
+					<tr>
+						<th class="collapsing">#</th>
+						<th>Title</th>
+						<th>Name</th>
+						<th>Age</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(key,row) in obj">
+						<!--
+							key对应对象的key
+							row指向obj中的value
+						-->
+						<td class="collapsing">{{$index+1}}</td>
+						<td>{{key}}</td>
+						<td>{{row.name}}</td>
+						<td>{{row.age}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 	</div>
 	
@@ -28,14 +97,31 @@
 		app.controller('ctrl',function($scope){
 			$scope.strings={
 				number:'123',
-				string:'abc'
+				string:'abc',
+				date:'2013-11-12'
+			};
+			
+			$scope.array=[
+				{name:'one',age:11,mark:'nothing'},
+				{name:'two',age:22,mark:'nothings'},
+				{name:'three',age:33,mark:'fuck off'},
+				{name:'four',age:44,mark:'nothings'},
+				{name:'five',age:55,mark:'nothing'},
+				{name:'six',age:66,mark:'nothing'}
+			];
+			
+			$scope.obj={
+				'first':{name:'one', age:'23'},
+				'second':{name:'two', age:'30'},
+				'third':{name:'three', age:'18'}
 			};
 
 		});
+		
 		app.filter('greet',function(){
 			//这里是自定义过滤器的业务代码
-			return function(text){
-				return 'Hello, '+text+'!';
+			return function(str){
+				return 'Hello, '+str+'!';
 			};
 		});
 	</script>

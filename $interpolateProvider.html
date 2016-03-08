@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing" ng-init="a='hello'">
+	
+		{% a %}
+		
+		<!--{{ }} 已经被 {% %} 替代-->
+		
+	</div>
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.config(function($interpolateProvider){
+			$interpolateProvider.startSymbol('{%');
+			$interpolateProvider.endSymbol('%}');
+		})
+		
+	</script>
+	
+</body>
+</html>
+
