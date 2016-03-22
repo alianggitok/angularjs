@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+	<style>
+		@charset "UTF-8";
+		[ng\:cloak],
+		[ng-cloak],
+		[data-ng-cloak],
+		[x-ng-cloak],
+		.ng-cloak,
+		.x-ng-cloak,
+		.ng-hide{display:none !important;}
+	</style>
+</head>
+
+<body>
+
+	<div class="ui container segment basic clearing" ng-controller="control" ng-cloak>
+		<table class="ui celled striped selectable unstackable table">
+			<thead>
+				<tr>
+					<th class="collapsing">#</th>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Mark</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in things">
+					<td class="collapsing">{{$index+1}}</td>
+					<td>{{row.name}}</td>
+					<td>{{row.age}}</td>
+					<td>{{row.remark}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.controller('control',function($scope,$timeout){
+
+			$scope.things=[
+				{name:'jack',age:18,remark:'wtf'},
+				{name:'rose',age:18,remark:'blablablabla'},
+				{name:'mary',age:18,remark:'wtf'},
+				{name:'john',age:18,remark:'blabla'},
+				{name:'tim',age:18,remark:'wtf'}
+			];
+			
+		});
+	</script>
+
+</body>
+
+</html>

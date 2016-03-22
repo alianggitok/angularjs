@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container segment basic clearing" ng-controller="control">
+	{{msg}}
+	</div>
+	
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		// http://www.tuicool.com/articles/rABfUvm
+		var app=angular.module('app',[]);
+
+		app.controller('control',function(
+			$scope,
+			serviceFactory,
+			serviceService,
+			serviceProvider
+		){
+			serviceFactory.do();
+			serviceService.do();
+			serviceProvider.do();
+			$scope.msg=serviceProvider.msg();
+		});
+		
+		//一下为service的构建方式
+		//分别是factory()、service()、provider()
+		
+		app.factory('serviceFactory',function(serviceService){
+			var service={
+				do:function(){
+					serviceService.do();//可以依赖以service()方法创建的service
+					console.log('factory');
+				}
+			};
+			return service;
+		});
+		
+		app.service('serviceService',function(){
+			//这相当于在factory()里return一个new过的构造函数
+			//而在这里，new和return都是自动完成的，只需要传入一个构造函数
+			this.do=function(){
+				console.log('service');
+			};
+		});
+		
+		app.provider('serviceProvider',function(){
+			//功能最全的建立service的方法
+			var service={
+				data:{//除$get之外的内容，可以在config里注入时做配置修改
+					msg:'111'
+				},
+				$get:function(){//$get是ng内定的，用来暴露内容，参数可以用来注入模块
+					return {
+						do:function(){
+							console.log('provider');
+						},
+						msg:function(){
+							return service.data.msg;
+						}
+					};
+				}
+			};
+
+			return service;
+		});
+
+		//可以再config里配置provider
+		app.config(function(serviceProviderProvider){//这里注入providers时，要在名称后再加个Provider
+			serviceProviderProvider.data.msg='222';
+		});
+		
+		
+		
+	</script>
+	
+</body>
+</html>
+

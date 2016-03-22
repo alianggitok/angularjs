@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+
+</head>
+
+<body>
+	<div class="ui container basic segment">
+		<h2>$emit $broadcast $on</h2>
+		<div class="ui segment" ng-controller="parent">
+			Parent {{state.parent}}
+			<div class="ui segment" ng-controller="self">
+				<div class="ui segment" ng-controller="child">
+					Child {{state.child}}
+				</div>
+				<button class="ui button" ng-click="click()">分发事件</button>
+			</div>
+			<div class="ui segment" ng-controller="brother">Brother {{state.brother}}</div>
+		</div>
+	</div>
+
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('demo',[]);
+
+		app.controller('self',function($scope){
+			var n=0
+			$scope.click=function(){//动态注册相关事件
+				console.log('Click time: '+n++);
+				$scope.$emit('toParent','received.');//发送给父作用域
+				$scope.$broadcast('toChild','received.');//向子作用域传递
+			};
+		});
+
+		app.controller('parent',function($scope){
+			$scope.$on('toParent',function(event,data){//绑定侦听事件
+				console.log(event);
+				$scope.state.parent=data;
+			});
+		});
+
+		app.controller('child',function($scope){
+			$scope.$on('toChild',function(event,data){
+				console.log(event);
+				$scope.state.child=data;
+			});
+		});
+
+		app.controller('brother',function($scope){
+			$scope.state.brother='never received.';
+		});
+
+		app.run(function($rootScope){
+			$rootScope.state={
+				parent:'not received.',
+				child:'not received.',
+				brother:'not received.'
+			};
+		});
+
+	</script>
+
+</body>
+</html>
+

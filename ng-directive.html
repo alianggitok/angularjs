@@ -28,6 +28,7 @@
 		<div class="ui bottom attached segment">
 			<div my-third="">I'm {{name}}. <b>I'm here.</b></div>
 		</div>
+		
 	</div>
 	
 	
@@ -40,17 +41,17 @@
 		app.controller('control',function($scope){
 			$scope.str='blablabla……';
 			$scope.name='Warren';
-			$scope.msg='yes?'
+			$scope.msg='yes?';
 		});
 		
 		app.directive('myFirst',function(){
 			return {
-				scope:false,
-					//值为true、false、{}（空对象），默认false
-					//false，子作用域继承父作用域，父子作用域变化相互影响
-					//true，子作用域继承父作用域，子作用域变化不影响父作用域
-					//{}，创建新的隔离的作用域，父子互不影响
-					//{key:value}，创建隔离作用域，设置绑定在该指令上的独立作用域
+				scope:true,//根据不同值，观察$scope.name的变化
+					//默认为false
+					//false，不创建子作用域，直接引用所在作用域下的scope
+					//true，创建子作用域，子作用域继承父作用域
+					//{}，创建新的隔离的作用域，不继承父作用域
+					//{key:[@=&]value}，创建隔离作用域，与该指令所在元素的属性建立起关联，前缀标识符用来表述关系
 				restrict:'ECA',
 					//设定以何种方式在html中书写，E元素标签形式，A属性形式，C类名形式
 				priority:1001,

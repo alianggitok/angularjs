@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container segment basic clearing" ng-controller="control">
+
+		{{text}}
+
+	</div>
+
+
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.controller('control',function($scope){
+			$scope.text='What?';
+
+			setTimeout(function(){
+				//当调用 angular 之外的方法来更新一个 model 时，
+				//需要手动调用 $apply() 来触发 $digest() 及时更新 view 层，
+				//除非用 angular 重新封装的方法，如 $timeout
+				$scope.$apply(function(){
+					$scope.text='Nothing!';
+				});
+			},3000);
+		});
+
+
+	</script>
+
+</body>
+</html>
+

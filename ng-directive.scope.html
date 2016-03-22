@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container segment basic clearing" ng-controller="control">
+
+		<h3 class="ui top attached header">scope</h3>
+		<div class="ui bottom attached segment">
+			color: {{color}}<input type="text" ng-model="color">
+			background: {{background}}
+			<div my-first="" exec="hello()" data-get-color="{{color}}" data-background="background"></div>
+		</div>
+		
+	</div>
+	
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		// http://blog.jobbole.com/62999/
+		var app=angular.module('app',[]);
+
+		app.controller('control',function($scope){
+			$scope.hello=function(){
+				alert('wtf');
+			};
+		});
+		
+		app.directive('myFirst',function(){
+			return {
+				restrict:'ECA',
+				scope:{
+					//和绑定该指令的元素上的属性挂钩，
+					//为了符合w3c规范，对应在元素上的属性名应当添加“data-”前缀
+					//同时，元素上的属性名以大写字母为界用“-”隔开单词
+					'color':'@getColor',
+						//父作用域的变化会影响指令内部的这个隔离作用域属性，但该隔离作用域的属性不会改变外部父作用域，单向绑定
+						//键名为指令内部作用域的 model，值为指令关联元素的的属性名，
+						//而对应在元素上的属性值为父作用域相关的 model
+					'background':'=',
+						//同时会更新父作用域，双向绑定，
+						//当元素上的属性名和该隔离域属性名相同，则可省去值名直接赋值“=”，单向绑定也是一样直接用“@”
+					'exec':'&'
+						//在元素上建立一个属性，用来关联父作用域上的 function，供指令内部调用
+						//键名为元素属性名，与 @ 和 & 不同
+				},
+				replace:true,
+				template:'<div style="color:{{color}};background:{{background}}">hello</div>',
+				link:function(scope,elem,attr){
+					elem.bind('click',function(){
+						scope.$apply(function(){
+							scope.color='red';
+							scope.background='black';
+							scope.exec();
+						});
+					});
+					elem.bind('mouseover',function(){
+						elem.css('cursor','pointer');
+					});
+				}
+			};
+		});
+	</script>
+	
+</body>
+</html>
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container segment basic clearing" ng-controller="control">
+		{{msg}}
+	</div>
+	
+	
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		// http://www.tuicool.com/articles/rABfUvm
+		var app=angular.module('app',[]);
+
+		app.controller('control',function($scope,textA){
+			$scope.msg=textA;
+		});
+		
+		app.value('textA','Hello!');
+		
+		
+	</script>
+	
+</body>
+</html>
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing" ng-controller="formCtrl">
+
+		<form class="ui segment form" novalidate>
+			<div class="field">
+				<label>name</label>
+				<input type="text" name="name" ng-model="user.name" placeholder="name">
+			</div>
+			<div class="field">
+				<label>age</label>
+				<input type="text" name="age" ng-model="user.age" placeholder="age">
+			</div>
+
+			<div class="ui divider"></div>
+			{{msg}}
+		</form>
+
+	</div>
+
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',[]);
+
+		app.controller('formCtrl',function($scope){
+			$scope.msg='';
+			$scope.user={
+				name:'',
+				age:''
+			};
+
+			$scope.$watch('user',function(newVelue,oldVelue){//观察 model age 的变化
+				var age=$scope.user.age,
+					msg='';
+
+				if(age&&age>0){
+					if(age<=18){
+						msg='你看起来没有那么小！';
+					}else{
+						msg='你好，'+$scope.user.name+'！';
+					}
+				}
+				$scope.msg=msg;
+
+				console.log('newVelue:',newVelue,'\n'+'oldVelue:',oldVelue);
+			},true);//这第三个参数设置是比对 model 值的变化（true）还是比对 model 的引用（false）
+
+		});
+
+	</script>
+
+</body>
+</html>
