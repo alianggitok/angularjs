@@ -6,14 +6,23 @@
 	<meta charset="UTF-8">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalabel=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="style/common.css">
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.8/semantic.min.css">
 </head>
 
-<body>
+<body ng-cloak>
 
-<script src="lib/require-2.1.22.min.js"></script>
-<script src="loader.js"></script>
+	<div class="ui container">
+		<div class="ui segment">111</div>
+		
+		<div class="ui segment" ng-view></div>
+	</div>
 
+
+	<script src="lib/requirejs-2.2.0/require.min.js"></script>
+	<script src="script/loader.js"></script>
 </body>
-
 
 </html>
