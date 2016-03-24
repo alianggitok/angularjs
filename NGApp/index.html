@@ -14,8 +14,8 @@
 
 <body ng-cloak>
 
-	<div class="ui container">
-		<div class="ui segment">111</div>
+	<div class="ui container" ng-controller="mainController">
+		<div class="ui segment">{{words}}</div>
 		
 		<div class="ui segment" ng-view></div>
 	</div>

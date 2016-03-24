@@ -30,7 +30,7 @@
 				deps:['jquery']
 			}
 		},
-		deps:['semantic-ui'],
+		deps:['app','semantic-ui'],
 //		urlArgs: 'timestamp_'+timestamp,//not load cache
 		waitSeconds:30//unit second
 	});
@@ -39,10 +39,6 @@
 //		console.error('==> Requirejs errors:', err.requireType, err);
 //	};
 	
-	require(['config','angular','app'],function(config,ng){
-		require(['domReady!'], function (doc) {
-			ng.bootstrap(doc,[config.appName]);
-		});
-	});
+
 	
 }(requirejs,require));
