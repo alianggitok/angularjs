@@ -17,30 +17,32 @@
 			'router':['script/router']
 		},
 		shim: {
+			'jquery':{
+				exports:'$',
+			},
 			'angular':{
 				exports:'angular'
 			},
 			'angularRoute':{
 				deps:['angular']
 			},
-			'jquery':{
-				exports:'$',
-				deps:['angular']
-			},
 			'semantic-ui':{
 				deps:['jquery']
 			}
 		},
-		
-		deps:['app','semantic-ui'],
+		deps:['semantic-ui'],
 //		urlArgs: 'timestamp_'+timestamp,//not load cache
 		waitSeconds:30//unit second
 	});
 
-	reqjs.onError=function(err){
-		console.error('==> Requirejs errors:', err.requireType, err);
-	};
+//	reqjs.onError=function(err){
+//		console.error('==> Requirejs errors:', err.requireType, err);
+//	};
 	
-
+	require(['config','angular','app'],function(config,ng){
+		require(['domReady!'], function (doc) {
+			ng.bootstrap(doc,[config.appName]);
+		});
+	});
 	
 }(requirejs,require));
