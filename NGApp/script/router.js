@@ -1,7 +1,8 @@
 define(['config'],function(config){
 	var routes=config.routes;
 	
-	function init($routeProvider,$locationProvider){
+	//路由配置
+	function route($routeProvider,$locationProvider){
 		for(var i=0,len=routes.length;i<len;i+=1){
 			$routeProvider.when(routes[i].url,{
 				templateUrl:routes[i].tmplUrl,
@@ -22,8 +23,23 @@ define(['config'],function(config){
 		$locationProvider.html5Mode(false);
 	}
 	
+	//路由事件
+	function events($scope){
+		$scope.$on('$routeChangeStart',function(event,next,current){
+//			$('#content').addClass('loading');
+//			$('.menu .item').siblings().removeClass('active');
+//			$('.menu .item[data-name='+next.menuItemName+']').addClass('active');
+			console.log('>> '+next.templateUrl+' is loading...');
+		});
+		$scope.$on('$routeChangeSuccess',function(event,current,previous){
+//			$('#content').removeClass('loading');
+			console.log('   '+current.loadedTemplateUrl+' loaded!');
+		});
+	}
+
 	return {
-		init:init
+		route:route,
+		events:events
 	};
 
 	
