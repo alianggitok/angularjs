@@ -12,12 +12,17 @@
 	<link rel="stylesheet" href="lib/semantic-ui-2.1.8/semantic.min.css">
 </head>
 
-<body ng-cloak>
+<body>
 
-	<div class="ui container" ng-controller="mainController">
-		<div class="ui segment">{{words}}</div>
+	<div class="ui container basic segment">
+		<div class="ui header large" ng-cloak>
+			{{appInfo.appText}} v{{appInfo.version}}
+		</div>
+		<div class="ui menu" ng-cloak>
+			<a ng-href="#{{item.url}}" data-menu-id="{{item.id}}" class="item" ng-repeat="item in menus">{{item.text}}</a>
+		</div>
 		
-		<div class="ui segment" ng-view></div>
+		<div class="ui segment" ng-view ng-cloak></div>
 	</div>
 
 

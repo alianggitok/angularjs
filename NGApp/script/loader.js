@@ -7,13 +7,13 @@
 			//plugin
 			'domReady':['lib/requirejs-2.2.0/domReady'],
 			//lib
-			'angular':['lib/angular-1.2.29/angular.min'],
-			'angularRoute':['lib/angular-1.2.29/angular-route.min'],
+			'angular':['lib/angular-1.2.29/angular'],
+			'angularRoute':['lib/angular-1.2.29/angular-route'],
 			'jquery':['lib/jquery-1.12.1.min'],
 			'semantic-ui':['lib/semantic-ui-2.1.8/semantic.min'],
 			//app
 			'app':['script/app'],
-			'config':['script/config'],
+			'settings':['script/settings'],
 			'router':['script/router']
 		},
 		shim: {
@@ -32,7 +32,7 @@
 		},
 		deps:['app','semantic-ui'],
 //		urlArgs: 'timestamp_'+timestamp,//not load cache
-		waitSeconds:30//unit second
+		waitSeconds:60//unit second
 	});
 
 //	reqjs.onError=function(err){

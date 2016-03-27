@@ -1,27 +1,36 @@
-define(['require','angular','angularRoute','config','router'],
-function(require,ng,ngRoute,config,router){
+define(['require','angular','angularRoute','settings','router'],
+function(require,ng,ngRoute,settings,router){
 
 	//手动启动 ngapp
 	require(['domReady!'], function (doc) {
-		ng.bootstrap(doc,[config.appName]);
+		console.warn('>>  angular booting...');
+		ng.bootstrap(doc,[settings.info.appName]);
 	});
 
 	//声明app模块
-	var app=ng.module(config.appName,['ngRoute']);
+	var app=ng.module(settings.info.appName,['ngRoute']);
 	
-	app.config(function($routeProvider,$locationProvider){
-		//配置路由
-		router.route($routeProvider,$locationProvider);
+	app.config(function($routeProvider,$locationProvider,$controllerProvider,$compileProvider, $filterProvider, $provide){
+		//为ng支持amd而配置
+		app.controller = $controllerProvider.register;
+		app.directive = $compileProvider.directive;
+		app.filter = $filterProvider.register;
+		app.factory = $provide.factory;
+		app.service = $provide.service;
+		app.provider = $provide.provider;
+		app.value = $provide.value;
+		app.constant = $provide.constant;
+		app.decorator = $provide.decorator;
+		//路由配置启动
+		router.route(app,$routeProvider,$locationProvider);
 	});
 
 	app.run(function($rootScope){
+		$rootScope.appInfo=settings.info;
+		$rootScope.menus=settings.menus;
 		//路由事件
-		router.events($rootScope)
+		router.events($rootScope);
 	});
 
-	app.controller('mainController',function($scope){
-		$scope.words='Hello world!';
-	});
-	
 	return app;
 });
