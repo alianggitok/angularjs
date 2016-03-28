@@ -9,8 +9,8 @@ define(['require','settings','jquery'],function(require,settings,$){
 						var deferred = $q.defer();
 						require([controllerFile], function (controller) {
 							app.controller(controllerName, controller);
-							console.log('\t'+controllerName+' registed!');
 							$rootScope.$apply(deferred.resolve);
+							console.log('\t'+controllerName+' registed!');
 						});
 						return deferred.promise;
 					};

@@ -1,5 +1,5 @@
 define(function(){
-	return function($scope){
+	return ['$scope',function($scope){
 		$scope.text='view-two';
-	};
+	}];
 });

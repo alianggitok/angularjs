@@ -6,8 +6,8 @@ define('settings',function(){
 			appText:'NGAPP',
 			version:'0.01'
 		},
-		config={
-			modulePath:'/module'
+		path={
+			module:'/module'
 		},
 		menus=[
 			{
@@ -22,7 +22,7 @@ define('settings',function(){
 				url: '/two'
 			}
 		],
-		routes=[]
+		routes=[];
 
 	//make routes
 	for(var i=0,len=menus.length;i<len;i+=1){
@@ -30,15 +30,15 @@ define('settings',function(){
 			id:menus[i].id,
 			name:menus[i].name,
 			url:menus[i].url,
-			templateUrl:config.modulePath+'/'+menus[i].name+'/view.html',
+			templateUrl:path.module+'/'+menus[i].name+'/view.html',
 			controllerName:menus[i].name+'Controller',
-			controllerFile:config.modulePath+'/'+menus[i].name+'/controller.js'
+			controllerFile:path.module+'/'+menus[i].name+'/controller.js'
 		};
 	}
 
 	return {
 		info:info,
-		config:config,
+		path:path,
 		menus:menus,
 		routes:routes
 	};
