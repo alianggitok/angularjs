@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="lib/semantic-ui-2.1.6/semantic.css">
+</head>
+
+<body>
+
+	<div class="ui container clearing" ng-controller="controller">
+
+		<!--以下三种写法可以实现相同功能，但是各有其独特用途-->
+		<h1>{{'title'|translate:transFiller}}</h1>
+		<p translate="words" translate-values="transFiller"></p>
+		<p translate="words" translate-value-current-language="{{transFiller.currentLanguage}}"></p>
+
+		<button class="ui button" ng-click="changeLanguage('zh-cn')">中文</button>
+		<button class="ui button" ng-click="changeLanguage('en')">英文</button>
+
+	</div>
+
+	<script src="lib/angular-1.2.28/angular.min.js"></script>
+	<script src="lib/angular-translate-2.9.0.1/angular-translate.min.js"></script>
+	<script src="lib/jquery-1.11.2.min.js"></script>
+	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
+	<script>
+		var app=angular.module('app',['pascalprecht.translate']);
+
+		app.config(function($translateProvider){
+			$translateProvider.translations('en',{
+				title:'Hello, {{name}}!',
+				words:'Language is "{{currentLanguage}}".'
+			});
+			$translateProvider.translations('zh-cn',{
+				title:'你好，{{name}}！',
+				words:'当前语种是：“{{currentLanguage}}”。'
+			});
+			$translateProvider.preferredLanguage('zh-cn');
+		});
+
+		app.controller('controller',function($scope,$translate){
+			$scope.transFiller={
+				name:'Warren',
+				currentLanguage:$translate.use()
+			};
+			$scope.changeLanguage=function(lang){
+				$translate.use(lang);
+				$scope.transFiller.currentLanguage=lang;
+			};
+		});
+
+
+	</script>
+
+</body>
+</html>

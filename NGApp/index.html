@@ -14,9 +14,14 @@
 
 <body>
 
-	<div class="ui container basic segment">
+	<div class="ui container basic segment" ng-controller="mainController">
 		<div class="ui header large" ng-cloak>
 			{{appInfo.appText}} v{{appInfo.version}}
+			<div class="ui mini buttons right floated">
+				<button class="ui button" ng-click="changeLanguage('en')" data-trans-lang="en">English</button>
+				<div class="or"></div>
+				<button class="ui button" ng-click="changeLanguage('zh_CN')" data-trans-lang="zh_CN">中文</button>
+			</div>
 		</div>
 		<div class="ui menu" ng-cloak>
 			<a ng-href="#{{item.url}}" data-menu-id="{{item.id}}" class="item" ng-repeat="item in menus">{{item.text}}</a>

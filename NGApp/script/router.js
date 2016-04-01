@@ -1,8 +1,9 @@
-define(['require','settings','jquery'],function(require,settings,$){
-	var routes=settings.routes;
+define(['require','boot','jquery'],function(require,boot,$){
+	var app=boot.app,
+		routes=boot.settings.routes;
 	
 	//路由配置
-	function route(app,$routeProvider,$locationProvider){
+	function route($routeProvider,$locationProvider){
 		var resolve = {
 				controller: function (controllerFile, controllerName) {
 					return function ($q, $rootScope) {
@@ -10,7 +11,7 @@ define(['require','settings','jquery'],function(require,settings,$){
 						require([controllerFile], function (controller) {
 							app.controller(controllerName, controller);
 							$rootScope.$apply(deferred.resolve);
-							console.log('\t'+controllerName+' registed!');
+							console.log(controllerName+' registed!');
 						});
 						return deferred.promise;
 					};
@@ -50,19 +51,19 @@ define(['require','settings','jquery'],function(require,settings,$){
 	//路由事件
 	function events(rootScope){
 		rootScope.$on('$routeChangeStart',function(event,next,current){
+			console.info('module '+next.name+' is loading...');
 //			$('#content').addClass('loading');
 			$('.menu .item').siblings().removeClass('active');
 			$('.menu .item[data-menu-id='+next.id+']').addClass('active');
-			console.log('>>  module '+next.name+' is loading...');
 		});
 		rootScope.$on('$routeChangeSuccess',function(event,current,previous){
-			console.log('\tmodule '+current.name+' load success!');
+			console.log('module '+current.name+' load success!');
 		});
 //		rootScope.$on('routeChangeError',function(){
-//			console.log('\tmodule load failed!');
+//			console.log('module load failed!');
 //		});
 		rootScope.$on('$viewContentLoaded',function(event){
-			console.log('\tng-view loaded!');
+			console.log('ng-view loaded!');
 		});
 	}
 

@@ -1,5 +1,7 @@
 define(function(){
 	return ['$scope',function($scope){
-		$scope.text='view-one';
+		$scope.transFiller={
+			viewName:'view-one'
+		};
 	}];
 });

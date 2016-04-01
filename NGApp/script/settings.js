@@ -1,13 +1,20 @@
 //settings
 
-define('settings',function(){
+define(function(){
 	var info={
 			appName:'ngapp',
 			appText:'NGAPP',
 			version:'0.01'
 		},
 		path={
-			module:'/module'
+			module:'/module',
+			i18n:'/i18n'
+		},
+		lang={
+			list:['en','zh_CN'],
+			default:'zh_CN',
+			filePrefix:'local-',
+			fileSuffix:'.json'
 		},
 		menus=[
 			{
@@ -31,7 +38,7 @@ define('settings',function(){
 			name:menus[i].name,
 			url:menus[i].url,
 			templateUrl:path.module+'/'+menus[i].name+'/view.html',
-			controllerName:menus[i].name+'Controller',
+			controllerName:menus[i].name+'ID'+menus[i].id+'Controller',
 			controllerFile:path.module+'/'+menus[i].name+'/controller.js'
 		};
 	}
@@ -39,6 +46,7 @@ define('settings',function(){
 	return {
 		info:info,
 		path:path,
+		lang:lang,
 		menus:menus,
 		routes:routes
 	};

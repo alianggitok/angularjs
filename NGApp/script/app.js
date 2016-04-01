@@ -1,14 +1,22 @@
-define(['require','angular','angularRoute','settings','router'],
-function(require,ng,ngRoute,settings,router){
-
-	//手动启动 ngapp
-	require(['domReady!'], function (doc) {
-		console.warn('>>  angular booting...');
-		ng.bootstrap(doc,[settings.info.appName]);
-	});
-
-	//声明app模块
-	var app=ng.module(settings.info.appName,['ngRoute']);
+define([
+	'boot',
+	'angular',
+	'angularCookies',
+	'angularTranslate',
+	'angularRoute',
+	'router',
+	'translater'
+],function(
+	boot,
+	ng,
+	ngCookies,
+	ngTrans,
+	ngRoute,
+	router,
+	translater
+){
+	var app=boot.app,
+		settings=boot.settings;
 	
 	app.config([
 		'$routeProvider',
@@ -17,13 +25,15 @@ function(require,ng,ngRoute,settings,router){
 		'$compileProvider',
 		'$filterProvider',
 		'$provide',
+		'$translateProvider',
 	function(
 		$routeProvider,
 		$locationProvider,
 		$controllerProvider,
 		$compileProvider,
 		$filterProvider,
-		$provide
+		$provide,
+		$translateProvider
 	){
 		//为ng支持amd而配置
 		app.controller = $controllerProvider.register;
@@ -36,14 +46,29 @@ function(require,ng,ngRoute,settings,router){
 		app.constant = $provide.constant;
 		app.decorator = $provide.decorator;
 		//路由配置启动
-		router.route(app,$routeProvider,$locationProvider);
+		router.route($routeProvider,$locationProvider);
+		//i18n
+		translater.config($translateProvider);
+
 	}]);
 
 	app.run(['$rootScope',function($rootScope){
-		$rootScope.appInfo=settings.info;
-		$rootScope.menus=settings.menus;
+	}]);
+
+	//主控制器
+	app.controller('mainController',[
+		'$scope','$rootScope','$cookieStore','$translate',
+	function($scope,$rootScope,$cookieStore,$translate){
+
+		$scope.appInfo=settings.info;
+		$scope.menus=settings.menus;
+
 		//路由事件
 		router.events($rootScope);
+		//i18n
+		translater.init($translate,$cookieStore);
+		translater.events($scope,$rootScope,$translate);
+
 	}]);
 
 	return app;
