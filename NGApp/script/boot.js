@@ -5,7 +5,7 @@ function(require,ng,ngCookies,ngTrans,ngRoute,settings){
 
 	//手动启动 ngapp
 	require(['domReady!'], function (doc) {
-		console.info('angular booting...');
+		console.info('app booting...');
 		ng.bootstrap(doc,[appName]);
 	});
 

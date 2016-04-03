@@ -61,7 +61,7 @@ define([
 	function($scope,$rootScope,$cookieStore,$translate){
 
 		$scope.appInfo=settings.info;
-		$scope.menus=settings.menus;
+		$scope.navi=settings.navi;
 
 		//路由事件
 		router.events($rootScope);

@@ -4,9 +4,9 @@ define(['require','jquery','boot'],function(require,$,boot){
 		i18nPath=settings.path.i18n,
 		asyncLoaderServiceName='translateAsyncLoader',
 		saveTransServiceName='translateStorage',
-		langs=['en','zh_CN'],
-		langFilePrefix='local-',
-		langFileSuffix='.json',
+		langs=settings.lang.langs,
+		langFilePrefix=settings.lang.filePrefix,
+		langFileSuffix=settings.lang.fileSuffix,
 		langFileURL=function(i){
 			return i18nPath+'/'+langFilePrefix+langs[i]+langFileSuffix;
 		};
@@ -16,7 +16,7 @@ define(['require','jquery','boot'],function(require,$,boot){
 		function load(path,deferred){
 			$http.get(path).success(function(res){
 				deferred.resolve(res);
-				console.log('translate file "'+path+'" loaded!');
+				console.log('i18n file "'+path+'" loaded!');
 			});
 		}
 		return function(options){
@@ -48,14 +48,15 @@ define(['require','jquery','boot'],function(require,$,boot){
 		translateProvider.useLoader(asyncLoaderServiceName);//注入translateAsyncLoader服务
 		translateProvider.useStorage(saveTransServiceName);
 		translateProvider.useSanitizeValueStrategy('escaped');//字符转义策略
-		translateProvider.preferredLanguage(settings.lang.default);//default
-//		translateProvider.fallbackLanguage(['en']);//后备，其中的语言会预先加载，当首选不可用时，这里的顶上
+//		translateProvider.preferredLanguage(settings.lang.default);//default
+//		translateProvider.fallbackLanguage(['en']);//后备，其中的语言会依次预先加载，当首选不可用时，这里的顶上
 		translateProvider.determinePreferredLanguage();//根据浏览器语言自动判断当前语言
 	}
 
 	//初始化
 	function init(translate,cookieStore){
-		translate.use(cookieStore.get('NG_TRANSLATE_LANG_KEY'));
+		var translateInCookies=cookieStore.get('NG_TRANSLATE_LANG_KEY');
+		translate.use(translateInCookies);
 	}
 
 	function state(lang){

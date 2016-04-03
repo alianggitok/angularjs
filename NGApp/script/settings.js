@@ -11,20 +11,20 @@ define(function(){
 			i18n:'/i18n'
 		},
 		lang={
-			list:['en','zh_CN'],
+			langs:['en','zh_CN'],
 			default:'zh_CN',
-			filePrefix:'local-',
+			filePrefix:'',
 			fileSuffix:'.json'
 		},
-		menus=[
+		navi=[
 			{
 				id: 0,
-				text: '模块一',
+				i18nID:'navi.one',
 				name:'one',
 				url: '/one'
 			}, {
 				id: 1,
-				text: '模块二',
+				i18nID:'navi.two',
 				name:'two',
 				url: '/two'
 			}
@@ -32,14 +32,14 @@ define(function(){
 		routes=[];
 
 	//make routes
-	for(var i=0,len=menus.length;i<len;i+=1){
+	for(var i=0,len=navi.length;i<len;i+=1){
 		routes[i]={
-			id:menus[i].id,
-			name:menus[i].name,
-			url:menus[i].url,
-			templateUrl:path.module+'/'+menus[i].name+'/view.html',
-			controllerName:menus[i].name+'ID'+menus[i].id+'Controller',
-			controllerFile:path.module+'/'+menus[i].name+'/controller.js'
+			id:navi[i].id,
+			name:navi[i].name,
+			url:navi[i].url,
+			templateUrl:path.module+'/'+navi[i].name+'/view.html',
+			controllerName:navi[i].name+'ID'+navi[i].id+'Controller',
+			controllerFile:path.module+'/'+navi[i].name+'/controller.js'
 		};
 	}
 
@@ -47,7 +47,7 @@ define(function(){
 		info:info,
 		path:path,
 		lang:lang,
-		menus:menus,
+		navi:navi,
 		routes:routes
 	};
 });

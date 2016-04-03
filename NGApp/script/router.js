@@ -4,6 +4,9 @@ define(['require','boot','jquery'],function(require,boot,$){
 	
 	//路由配置
 	function route($routeProvider,$locationProvider){
+		//是否以 pushState 方式来进行路由
+		$locationProvider.html5Mode(false);
+
 		var resolve = {
 				controller: function (controllerFile, controllerName) {
 					return function ($q, $rootScope) {
@@ -44,8 +47,6 @@ define(['require','boot','jquery'],function(require,boot,$){
 			templateUrl:'/module/404.html'
 		});
 
-		//是否以 pushState 方式来进行路由
-		$locationProvider.html5Mode(false);
 	}
 	
 	//路由事件
@@ -54,7 +55,7 @@ define(['require','boot','jquery'],function(require,boot,$){
 			console.info('module '+next.name+' is loading...');
 //			$('#content').addClass('loading');
 			$('.menu .item').siblings().removeClass('active');
-			$('.menu .item[data-menu-id='+next.id+']').addClass('active');
+			$('.menu .item[data-navi-id='+next.id+']').addClass('active');
 		});
 		rootScope.$on('$routeChangeSuccess',function(event,current,previous){
 			console.log('module '+current.name+' load success!');

@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<div class="ui menu" ng-cloak>
-			<a ng-href="#{{item.url}}" data-menu-id="{{item.id}}" class="item" ng-repeat="item in menus">{{item.text}}</a>
+			<a ng-href="#{{item.url}}" data-navi-id="{{item.id}}" class="item" ng-repeat="item in navi">{{item.i18nID|translate}}</a>
 		</div>
 		
 		<div class="ui segment" ng-view ng-cloak></div>
