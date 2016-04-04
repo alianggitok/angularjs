@@ -16,6 +16,7 @@
 			//app
 			'boot':['script/boot'],
 			'app':['script/app'],
+			'ui':['script/ui'],
 			'settings':['script/settings'],
 			'router':['script/router'],
 			'translater':['script/translater']
@@ -38,9 +39,12 @@
 			},
 			'semantic-ui':{
 				deps:['jquery']
+			},
+			'ui':{
+				deps:['jquery','semantic-ui']
 			}
 		},
-		deps:['app','semantic-ui'],
+		deps:['app','ui'],
 //		urlArgs: 'timestamp_'+timestamp,//not load cache
 		waitSeconds:60//unit second
 	});

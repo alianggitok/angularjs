@@ -1,4 +1,4 @@
-define(['require','jquery','boot'],function(require,$,boot){
+define(['require','jquery','boot','ui'],function(require,$,boot,ui){
 	var settings=boot.settings,
 		app=boot.app,
 		i18nPath=settings.path.i18n,
@@ -59,10 +59,6 @@ define(['require','jquery','boot'],function(require,$,boot){
 		translate.use(translateInCookies);
 	}
 
-	function state(lang){
-		$('.ui.button[data-trans-lang="'+lang+'"]').addClass('primary').siblings().removeClass('primary');
-	}
-
 	//事件
 	function events(scope,rootScope,translate){
 		scope.changeLanguage=function(lang){
@@ -72,7 +68,7 @@ define(['require','jquery','boot'],function(require,$,boot){
 
 		rootScope.$on('$translateChangeSuccess',function(){
 			var lang=translate.use();
-			state(lang);
+			ui.translateStatus(lang);
 			console.log('language "'+lang+'" switched!');
 		});
 

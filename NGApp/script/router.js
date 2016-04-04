@@ -1,4 +1,4 @@
-define(['require','boot','jquery'],function(require,boot,$){
+define(['require','boot','jquery','ui'],function(require,boot,$,ui){
 	var app=boot.app,
 		routes=boot.settings.routes;
 	
@@ -54,10 +54,9 @@ define(['require','boot','jquery'],function(require,boot,$){
 		rootScope.$on('$routeChangeStart',function(event,next,current){
 			console.info('module '+next.name+' is loading...');
 //			$('#content').addClass('loading');
-			$('.menu .item').siblings().removeClass('active');
-			$('.menu .item[data-navi-id='+next.id+']').addClass('active');
 		});
 		rootScope.$on('$routeChangeSuccess',function(event,current,previous){
+			ui.naviStatus(current.id);
 			console.log('module '+current.name+' load success!');
 		});
 //		rootScope.$on('routeChangeError',function(){
