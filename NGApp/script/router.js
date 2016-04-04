@@ -1,4 +1,4 @@
-define(['require','boot','jquery','ui'],function(require,boot,$,ui){
+define(['require','boot','ui'],function(require,boot,ui){
 	var app=boot.app,
 		routes=boot.settings.routes;
 	
@@ -53,7 +53,6 @@ define(['require','boot','jquery','ui'],function(require,boot,$,ui){
 	function events(rootScope){
 		rootScope.$on('$routeChangeStart',function(event,next,current){
 			console.info('module '+next.name+' is loading...');
-//			$('#content').addClass('loading');
 		});
 		rootScope.$on('$routeChangeSuccess',function(event,current,previous){
 			ui.naviStatus(current.id);

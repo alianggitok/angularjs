@@ -1,4 +1,4 @@
-define([
+require([
 	'boot',
 	'angular',
 	'angularCookies',

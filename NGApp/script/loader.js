@@ -1,5 +1,4 @@
-(function(reqjs,require){
-	var timestamp=(new Date()).getTime();
+(function(reqjs){
 	
 	reqjs.config({
 		baseUrl:'',
@@ -45,7 +44,7 @@
 			}
 		},
 		deps:['app','ui'],
-//		urlArgs: 'timestamp_'+timestamp,//not load cache
+//		urlArgs: 'timestamp_'+(new Date()).getTime(),//not load cache
 		waitSeconds:60//unit second
 	});
 
@@ -53,4 +52,4 @@
 //		console.error('==> Requirejs errors:', err.requireType, err);
 //	};
 
-}(requirejs,require));
+}(requirejs));

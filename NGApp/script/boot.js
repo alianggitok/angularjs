@@ -1,5 +1,5 @@
-define(['require','angular','angularCookies','angularTranslate','angularRoute','settings'],
-function(require,ng,ngCookies,ngTrans,ngRoute,settings){
+define(['require','settings','angular','angularCookies','angularTranslate','angularRoute'],
+function(require,settings,ng,ngCookies,ngTrans,ngRoute){
 
 	var appName=settings.info.appName;
 

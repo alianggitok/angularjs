@@ -1,4 +1,4 @@
-define(['require','jquery','boot','ui'],function(require,$,boot,ui){
+define(['require','boot','ui'],function(require,boot,ui){
 	var settings=boot.settings,
 		app=boot.app,
 		i18nPath=settings.path.i18n,

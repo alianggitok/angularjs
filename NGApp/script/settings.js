@@ -7,6 +7,7 @@ define(function(){
 			version:'0.01'
 		},
 		path={
+            root:'',
 			module:'/module',
 			i18n:'/i18n'
 		},
