@@ -1,6 +1,7 @@
 define(['require','boot','ui'],function(require,boot,ui){
 	var settings=boot.settings,
 		app=boot.app,
+		rootPath=settings.path.root,
 		i18nPath=settings.path.i18n,
 		asyncLoaderServiceName='translateAsyncLoader',
 		saveTransServiceName='translateStorage',
@@ -8,7 +9,7 @@ define(['require','boot','ui'],function(require,boot,ui){
 		langFilePrefix=settings.lang.filePrefix,
 		langFileSuffix=settings.lang.fileSuffix,
 		langFileURL=function(i){
-			return i18nPath+'/'+langFilePrefix+langs[i]+langFileSuffix;
+			return rootPath+i18nPath+'/'+langFilePrefix+langs[i]+langFileSuffix;
 		};
 
 	//async loader service

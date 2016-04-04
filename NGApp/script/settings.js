@@ -7,7 +7,7 @@ define(function(){
 			version:'0.01'
 		},
 		path={
-            root:'',
+            root:'.',
 			module:'/module',
 			i18n:'/i18n'
 		},
@@ -38,9 +38,9 @@ define(function(){
 			id:navi[i].id,
 			name:navi[i].name,
 			url:navi[i].url,
-			templateUrl:path.module+'/'+navi[i].name+'/view.html',
+			templateUrl:path.root+path.module+'/'+navi[i].name+'/view.html',
 			controllerName:navi[i].name+'ID'+navi[i].id+'Controller',
-			controllerFile:path.module+'/'+navi[i].name+'/controller.js'
+			controllerFile:path.root+path.module+'/'+navi[i].name+'/controller.js'
 		};
 	}
 
