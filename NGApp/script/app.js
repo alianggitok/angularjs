@@ -26,33 +26,35 @@ require([
 		'$filterProvider',
 		'$provide',
 		'$translateProvider',
-	function(
-		$routeProvider,
-		$locationProvider,
-		$controllerProvider,
-		$compileProvider,
-		$filterProvider,
-		$provide,
-		$translateProvider
-	){
-		//为ng支持amd而配置
-		app.controller = $controllerProvider.register;
-		app.directive = $compileProvider.directive;
-		app.filter = $filterProvider.register;
-		app.factory = $provide.factory;
-		app.service = $provide.service;
-		app.provider = $provide.provider;
-		app.value = $provide.value;
-		app.constant = $provide.constant;
-		app.decorator = $provide.decorator;
-		//路由配置启动
-		router.route($routeProvider,$locationProvider);
-		//i18n
-		translater.config($translateProvider);
+		function(
+			$routeProvider,
+			$locationProvider,
+			$controllerProvider,
+			$compileProvider,
+			$filterProvider,
+			$provide,
+			$translateProvider
+		){
+			//为ng支持amd而配置
+			app.controller = $controllerProvider.register;
+			app.directive = $compileProvider.directive;
+			app.filter = $filterProvider.register;
+			app.factory = $provide.factory;
+			app.service = $provide.service;
+			app.provider = $provide.provider;
+			app.value = $provide.value;
+			app.constant = $provide.constant;
+			app.decorator = $provide.decorator;
+			//路由配置启动
+			router.route($routeProvider,$locationProvider);
+			//i18n
+			translater.config($translateProvider);
 
-	}]);
+		}
+	]);
 
 	app.run(['$rootScope',function($rootScope){
+
 	}]);
 
 	//主控制器
