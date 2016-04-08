@@ -11,8 +11,8 @@
 	<div class="ui container segment basic clearing" ng-controller="control">
 	{{msg}}
 	</div>
-	
-	
+
+
 	<script src="lib/angular-1.2.28/angular.min.js"></script>
 	<script src="lib/jquery-1.11.2.min.js"></script>
 	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
@@ -31,10 +31,10 @@
 			serviceProvider.do();
 			$scope.msg=serviceProvider.msg();
 		});
-		
+
 		//一下为service的构建方式
 		//分别是factory()、service()、provider()
-		
+
 		app.factory('serviceFactory',function(serviceService){
 			var service={
 				do:function(){
@@ -44,7 +44,7 @@
 			};
 			return service;
 		});
-		
+
 		app.service('serviceService',function(){
 			//这相当于在factory()里return一个new过的构造函数
 			//而在这里，new和return都是自动完成的，只需要传入一个构造函数
@@ -52,7 +52,7 @@
 				console.log('service');
 			};
 		});
-		
+
 		app.provider('serviceProvider',function(){
 			//功能最全的建立service的方法
 			var service={
@@ -78,11 +78,11 @@
 		app.config(function(serviceProviderProvider){//这里注入providers时，要在名称后再加个Provider
 			serviceProviderProvider.data.msg='222';
 		});
-		
-		
-		
+
+
+
 	</script>
-	
+
 </body>
 </html>
 

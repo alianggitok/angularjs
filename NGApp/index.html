@@ -15,7 +15,7 @@
 <body ng-controller="mainController">
 
 	<div class="ui container basic segment">
-		<div class="ui header large" ng-cloak>
+		<div class="ui header large">
 			{{appInfo.appText}} v{{appInfo.version}}
 			<div class="ui mini buttons right floated">
 				<button class="ui button" ng-click="changeLanguage('en')" data-trans-lang="en">English</button>
@@ -23,13 +23,19 @@
 				<button class="ui button" ng-click="changeLanguage('zh_CN')" data-trans-lang="zh_CN">中文</button>
 			</div>
 		</div>
-		<div class="ui menu" ng-cloak>
+		<div class="ui menu">
 			<a ng-href="#{{item.url}}" data-navi-id="{{item.id}}" class="item" ng-repeat="item in navi">{{item.i18nID|translate}}</a>
 		</div>
 		
-		<div class="ui segment" ng-view ng-cloak></div>
+		<div class="ui segment" ng-view></div>
 	</div>
 
+
+
+
+	<div class="ui active dimmer">
+		<div class="ui text loader"><span translate="loading"></span></div>
+	</div>
 
 	<script src="lib/requirejs-2.2.0/require.min.js"></script>
 	<script src="script/loader.js"></script>

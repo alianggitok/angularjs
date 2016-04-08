@@ -9,6 +9,9 @@ define(['require','boot','ui'],function(require,boot,ui){
 
 		var resolve = {
 				controller: function (controllerFile, controllerName) {
+					if(!controllerFile){
+						return;
+					}
 					return function ($q, $rootScope) {
 						var deferred = $q.defer();
 						require([controllerFile], function (controller) {
@@ -51,7 +54,9 @@ define(['require','boot','ui'],function(require,boot,ui){
 	
 	//路由事件
 	function events(rootScope){
+		var loader=ui.loader();
 		rootScope.$on('$routeChangeStart',function(event,next,current){
+			loader.show();
 			console.info('module '+next.name+' is loading...');
 		});
 		rootScope.$on('$routeChangeSuccess',function(event,current,previous){
@@ -62,6 +67,7 @@ define(['require','boot','ui'],function(require,boot,ui){
 //			console.log('module load failed!');
 //		});
 		rootScope.$on('$viewContentLoaded',function(event){
+			loader.hide();
 			console.log('ng-view loaded!');
 		});
 	}

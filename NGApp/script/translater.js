@@ -15,10 +15,14 @@ define(['require','boot','ui'],function(require,boot,ui){
 	//async loader service
 	app.factory(asyncLoaderServiceName,function($http,$q){
 		function load(path,deferred){
-			$http.get(path).success(function(res){
-				deferred.resolve(res);
+			require([path],function(trans){
+				deferred.resolve(trans);
 				console.log('i18n file "'+path+'" loaded!');
 			});
+//			$http.get(path).success(function(res){
+//				deferred.resolve(res);
+//				console.log('i18n file "'+path+'" loaded!');
+//			});
 		}
 		return function(options){
 			var deferred=$q.defer();

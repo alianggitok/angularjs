@@ -5,6 +5,7 @@
 		paths: {
 			//plugin
 			'domReady':['lib/requirejs-2.2.0/domReady'],
+			'text':['lib/requirejs-2.2.0/text'],
 			//lib
 			'angular':['lib/angular-1.2.29/angular'],
 			'angularCookies':['lib/angular-1.2.29/angular-cookies.min'],
@@ -48,8 +49,9 @@
 		waitSeconds:60//unit second
 	});
 
-//	reqjs.onError=function(err){
+	reqjs.onError=function(err){
 //		console.error('==> Requirejs errors:', err.requireType, err);
-//	};
+		alert('Requirejs errors: '+ err.requireType+'.');
+	};
 
 }(requirejs));

@@ -1,17 +1,17 @@
 require([
-	'boot',
 	'angular',
 	'angularCookies',
 	'angularTranslate',
 	'angularRoute',
+	'boot',
 	'router',
 	'translater'
 ],function(
-	boot,
 	ng,
 	ngCookies,
 	ngTrans,
 	ngRoute,
+	boot,
 	router,
 	translater
 ){

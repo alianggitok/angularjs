@@ -1,5 +1,4 @@
 //settings
-
 define(function(){
 	var info={
 			appName:'ngapp',
@@ -7,7 +6,7 @@ define(function(){
 			version:'0.01'
 		},
 		path={
-            root:'.',
+            root:'',
 			module:'/module',
 			i18n:'/i18n'
 		},
@@ -15,7 +14,7 @@ define(function(){
 			langs:['en','zh_CN'],
 			default:'zh_CN',
 			filePrefix:'',
-			fileSuffix:'.json'
+			fileSuffix:'.js'
 		},
 		navi=[
 			{
