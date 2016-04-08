@@ -1,6 +1,6 @@
-(function(reqjs){
+(function(require){
 	
-	reqjs.config({
+	require.config({
 		baseUrl:'',
 		paths: {
 			//plugin
@@ -49,9 +49,4 @@
 		waitSeconds:60//unit second
 	});
 
-	reqjs.onError=function(err){
-//		console.error('==> Requirejs errors:', err.requireType, err);
-		alert('Requirejs errors: '+ err.requireType+'.');
-	};
-
-}(requirejs));
+}(require));

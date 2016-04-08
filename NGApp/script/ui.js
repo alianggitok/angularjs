@@ -1,4 +1,4 @@
-define(['require','jquery'],function(require,$){
+define(['jquery'],function($){
 	return {
 		naviStatus:function(id){
 			$('.menu .item').siblings().removeClass('active');
