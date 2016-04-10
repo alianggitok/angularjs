@@ -60,18 +60,19 @@ require([
 	//主控制器
 	app.controller('mainController',[
 		'$scope','$rootScope','$cookieStore','$translate',
-	function($scope,$rootScope,$cookieStore,$translate){
+		function($scope,$rootScope,$cookieStore,$translate){
 
-		$scope.appInfo=settings.info;
-		$scope.navi=settings.navi;
+			$scope.appInfo=settings.info;
+			$scope.navi=settings.navi;
 
-		//路由事件
-		router.events($rootScope);
-		//i18n
-		translater.init($translate,$cookieStore);
-		translater.events($scope,$rootScope,$translate);
+			//路由事件
+			router.events($rootScope);
+			//i18n
+			translater.init($translate,$cookieStore);
+			translater.events($scope,$rootScope,$translate);
 
-	}]);
+		}
+	]);
 
 	return app;
 });
