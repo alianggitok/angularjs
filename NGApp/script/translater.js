@@ -15,14 +15,17 @@ define(['require','boot','ui'],function(require,boot,ui){
 
 	//async loader service
 	app.factory(asyncLoaderServiceName,['$http','$q',function($http,$q){
+		function load(filePath, deferred) {
+			require([filePath], function (trans) {
+				deferred.resolve(trans);
+				console.log('i18n file "' + filePath + '" loaded!');
+			});
+		}
 		return function(options){
 			var deferred=$q.defer();
 			for(var i=0,n=langs.length;i<n;i++){
 				if(options.key===langs[i]){
-					require([langFileURL(i)],function(trans){
-						deferred.resolve(trans);
-						console.log('i18n file "'+langFileURL(i)+'" loaded!');
-					});
+					load(langFileURL(i),deferred);
 				}
 			}
 			return deferred.promise;
