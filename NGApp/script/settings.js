@@ -11,7 +11,8 @@ define(function(){
 			i18n:'/i18n'
 		},
 		lang={
-			langs:['en','zh_CN'],
+			cookieKey:'i18n',
+			langs:['zh_CN','en'],
 			default:'zh_CN',
 			filePrefix:'',
 			fileSuffix:'.js'

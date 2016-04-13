@@ -67,7 +67,7 @@ require([
 		router.events($rootScope);
 		//i18n
 		translater.init($translate,$cookieStore);
-		translater.events($scope,$rootScope,$translate);
+		translater.events($scope,$rootScope,$translate,$cookieStore);
 
 	}]);
 

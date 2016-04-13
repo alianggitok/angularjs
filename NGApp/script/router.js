@@ -12,7 +12,7 @@ define(['require','boot','ui'],function(require,boot,ui){
 					if(!controllerFile){
 						return;
 					}
-					return function ($q, $rootScope) {
+					return ['$q','$rootScope',function ($q, $rootScope) {
 						var deferred = $q.defer();
 						require([controllerFile], function (controller) {
 							app.controller(controllerName, controller);
@@ -20,7 +20,7 @@ define(['require','boot','ui'],function(require,boot,ui){
 							console.log(controllerName+' registed!');
 						});
 						return deferred.promise;
-					};
+					}];
 				}
 			};
 

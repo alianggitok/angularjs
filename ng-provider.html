@@ -74,7 +74,7 @@
 			return service;
 		});
 
-		//可以再config里配置provider
+		//可以在config里配置provider
 		app.config(function(serviceProviderProvider){//这里注入providers时，要在名称后再加个Provider
 			serviceProviderProvider.data.msg='222';
 		});

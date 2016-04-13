@@ -3,8 +3,9 @@ define(['require','boot','ui'],function(require,boot,ui){
 		app=boot.app,
 		rootPath=settings.path.root,
 		i18nPath=settings.path.i18n,
+		langCookieKey=settings.lang.cookieKey,
 		asyncLoaderServiceName='translateAsyncLoader',
-		saveTransServiceName='translateStorage',
+//		saveTransServiceName='translateStorage',
 		langs=settings.lang.langs,
 		langFilePrefix=settings.lang.filePrefix,
 		langFileSuffix=settings.lang.fileSuffix,
@@ -13,45 +14,24 @@ define(['require','boot','ui'],function(require,boot,ui){
 		};
 
 	//async loader service
-	app.factory(asyncLoaderServiceName,function($http,$q){
-		function load(path,deferred){
-			require([path],function(trans){
-				deferred.resolve(trans);
-				console.log('i18n file "'+path+'" loaded!');
-			});
-//			$http.get(path).success(function(res){
-//				deferred.resolve(res);
-//				console.log('i18n file "'+path+'" loaded!');
-//			});
-		}
+	app.factory(asyncLoaderServiceName,['$http','$q',function($http,$q){
 		return function(options){
 			var deferred=$q.defer();
 			for(var i=0,n=langs.length;i<n;i++){
 				if(options.key===langs[i]){
-					load(langFileURL(i),deferred);
+					require([langFileURL(i)],function(trans){
+						deferred.resolve(trans);
+						console.log('i18n file "'+langFileURL(i)+'" loaded!');
+					});
 				}
 			}
 			return deferred.promise;
 		};
-	});
-
-	//current language storage
-	app.factory(saveTransServiceName,function($cookieStore){
-		return {
-			put:function(name,value){
-				console.log('put in cookies:',name,value);
-				$cookieStore.put(name,value);
-			},
-			get:function(name){
-				$cookieStore.get(name);
-			}
-		};
-	});
+	}]);
 
 	//i18n配置
 	function config(translateProvider){
 		translateProvider.useLoader(asyncLoaderServiceName);//注入translateAsyncLoader服务
-		translateProvider.useStorage(saveTransServiceName);
 		translateProvider.useSanitizeValueStrategy('escaped');//字符转义策略
 //		translateProvider.preferredLanguage(settings.lang.default);//default
 //		translateProvider.fallbackLanguage(['en']);//后备，其中的语言会依次预先加载，当首选不可用时，这里的顶上
@@ -60,12 +40,12 @@ define(['require','boot','ui'],function(require,boot,ui){
 
 	//初始化
 	function init(translate,cookieStore){
-		var translateInCookies=cookieStore.get('NG_TRANSLATE_LANG_KEY');
+		var translateInCookies=cookieStore.get(langCookieKey);
 		translate.use(translateInCookies);
 	}
 
 	//事件
-	function events(scope,rootScope,translate){
+	function events(scope,rootScope,translate,cookieStore){
 		scope.changeLanguage=function(lang){
 			console.info('switching the language to "'+lang+'"...');
 			translate.use(lang);
@@ -75,6 +55,8 @@ define(['require','boot','ui'],function(require,boot,ui){
 			var lang=translate.use();
 			ui.translateStatus(lang);
 			console.log('language "'+lang+'" switched!');
+			cookieStore.put(langCookieKey,lang);
+			console.log('put in cookies:',langCookieKey,lang);
 		});
 
 	}
