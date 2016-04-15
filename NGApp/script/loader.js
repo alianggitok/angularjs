@@ -14,10 +14,10 @@
 			'jquery':['lib/jquery-1.12.1.min'],
 			'semantic-ui':['lib/semantic-ui-2.1.8/semantic.min'],
 			//app
+			'settings':['settings'],
 			'boot':['script/boot'],
 			'app':['script/app'],
 			'ui':['script/ui'],
-			'settings':['script/settings'],
 			'router':['script/router'],
 			'translater':['script/translater']
 		},
