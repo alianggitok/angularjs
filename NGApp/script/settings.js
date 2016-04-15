@@ -7,7 +7,7 @@ define(function(){
 		},
 		path={
             root:'',
-			module:'/module',
+			view:'/view',
 			i18n:'/i18n'
 		},
 		lang={
@@ -38,9 +38,9 @@ define(function(){
 			id:navi[i].id,
 			name:navi[i].name,
 			url:navi[i].url,
-			templateUrl:path.root+path.module+'/'+navi[i].name+'/view.html',
+			templateUrl:path.root+path.view+'/'+navi[i].name+'/view.html',
 			controllerName:navi[i].name+'ID'+navi[i].id+'Controller',
-			controllerFile:path.root+path.module+'/'+navi[i].name+'/controller.js'
+			controllerFile:path.root+path.view+'/'+navi[i].name+'/controller.js'
 		};
 	}
 

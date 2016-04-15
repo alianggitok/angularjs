@@ -1,6 +1,7 @@
 define(['require','boot','ui'],function(require,boot,ui){
 	var app=boot.app,
-		routes=boot.settings.routes;
+		settings=boot.settings,
+		routes=settings.routes;
 	
 	//路由配置
 	function route($routeProvider,$locationProvider){
@@ -17,6 +18,7 @@ define(['require','boot','ui'],function(require,boot,ui){
 						require([controllerFile], function (controller) {
 							app.controller(controllerName, controller);
 							$rootScope.$apply(deferred.resolve);
+//							deferred.resolve(controller);
 							console.log(controllerName+' registed!');
 						});
 						return deferred.promise;
@@ -47,7 +49,7 @@ define(['require','boot','ui'],function(require,boot,ui){
 			}
 		}).otherwise({
 			name:'404',
-			templateUrl:'/module/404.html'
+			templateUrl:settings.path.view+'/404.html'
 		});
 
 	}
@@ -57,14 +59,14 @@ define(['require','boot','ui'],function(require,boot,ui){
 		var loader=ui.loader();
 		rootScope.$on('$routeChangeStart',function(event,next,current){
 			loader.show();
-			console.info('module '+next.name+' is loading...');
+			console.info('view "'+next.templateUrl+'" is loading...');
 		});
 		rootScope.$on('$routeChangeSuccess',function(event,current,previous){
 			ui.naviStatus(current.id);
-			console.log('module '+current.name+' load success!');
+			console.log('view "'+current.templateUrl+'" load success!');
 		});
 //		rootScope.$on('routeChangeError',function(){
-//			console.log('module load failed!');
+//			console.log('view load failed!');
 //		});
 		rootScope.$on('$viewContentLoaded',function(event){
 			loader.hide();

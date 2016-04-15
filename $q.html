@@ -9,7 +9,7 @@
 <body>
 
 	<div class="ui container segment basic clearing" ng-controller="control">
-
+		{{status}}
 	</div>
 
 
@@ -17,9 +17,72 @@
 	<script src="lib/jquery-1.11.2.min.js"></script>
 	<script src="lib/semantic-ui-2.1.6/semantic.js"></script>
 	<script>
+		//异步回调的另一种编程风格，使得代码直观易读
+		//通过 deferred 对象把执行结果传递给 promise 下的方法执行回调
+		//deferred 的执行结果是不可逆的，即“成功就成功，失败就失败”
+
 		var app=angular.module('app',[]);
 
-		app.controller('control',function($scope,$q){
+		app.factory('promise',function($q,$timeout,$interval){
+			return function(){
+				var deferred=$q.defer(),//构造一个 defer
+					timer=null,
+					n=0;
+
+				timer=$interval(function(){
+					n+=1;
+					if(n>=3){
+						$interval.cancel(timer);
+					}
+					deferred.notify(n);//发送进程消息
+				},1000);
+
+				$timeout(function(){
+					deferred.resolve('success!');//成功，传递的字符串可以被 deferred.promise() 的方法接收到
+				},3000);
+				//通过 deferred.reject(str) 传递失败的通知，让 promise 执行失败时的回调
+
+				return deferred.promise;
+
+			};
+		});
+
+		app.controller('control',function($scope,promise,$q){
+			var promise=promise();
+			promise.then(
+				function(str){//resolve callback，str 指向 defrred.resolve 中的字符参数
+					$scope.status=str;
+				},function(){//reject callback
+					return;
+				},function(str){//notify callback
+					$scope.status=str;
+				}).finally(function(){//不论失败或成功，都会执行其中的回调
+					console.info('finished at',new Date());
+				}
+			);
+
+			//借助 $q.all() 可以对一组 promise 做回调操作，
+			//只有这一组 promise 完成才会执行回调
+			//只有当一组 promise 都为 resolve 才会执行 resolve 的回调，否则执行 reject 的回调
+			//无 notify 回调
+			var deferredB=$q.defer(),
+				promiseA=promise,
+				promiseB=null;
+
+			promiseB=(function(){
+				var deferredB=$q.defer();
+				deferredB.resolve();
+				return deferredB.promise;
+			})();
+
+			$q.all([promiseA,promiseB]).then(
+				function(){//resolve callback
+					console.log('all success');
+				},
+				function(){//reject callback
+					console.log('all failed');
+				}
+			);
 
 		});
 

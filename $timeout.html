@@ -30,7 +30,10 @@
 				var formatStr,
 					timeoutId;
 
-				function updateTime(){//dateFilter为基础的一个时间格式化函数
+				function updateTime(){//以 dateFilter 为基础的一个时间格式化函数
+					//dateFilter 是 ng 內建的 日期过滤器 date，
+					//当注入到 directive 的时候写成 dateFilter
+					//参考 https://code.angularjs.org/1.2.5/docs/api/ng.filter:date
 					elem.text(dateFilter(new Date(),formatStr));
 				}
 
