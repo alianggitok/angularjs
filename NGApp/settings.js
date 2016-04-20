@@ -29,19 +29,22 @@ define(function(){
 				name:'two',
 				url: '/two'
 			}
-		],
-		routes=[];
+		];
 
 	//make routes
-	for(var i=0,len=navi.length;i<len;i+=1){
-		routes[i]={
-			id:navi[i].id,
-			name:navi[i].name,
-			url:navi[i].url,
-			templateUrl:path.root+path.view+'/'+navi[i].name+'/view.html',
-			controllerName:navi[i].name+'ID'+navi[i].id+'Controller',
-			controllerFile:path.root+path.view+'/'+navi[i].name+'/controller.js'
-		};
+	function makeRoutes(){
+		var routes=[];
+		for(var i=0,len=navi.length;i<len;i+=1){
+			routes[i]={
+				id:navi[i].id,
+				name:navi[i].name,
+				url:navi[i].url,
+				templateUrl:path.root+path.view+'/'+navi[i].name+'/view.html',
+				controllerName:navi[i].name+'ID'+navi[i].id+'Controller',
+				controllerFile:path.root+path.view+'/'+navi[i].name+'/controller.js'
+			};
+		}
+		return routes;
 	}
 
 	return {
@@ -49,6 +52,6 @@ define(function(){
 		path:path,
 		lang:lang,
 		navi:navi,
-		routes:routes
+		routes:makeRoutes()
 	};
 });
