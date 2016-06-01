@@ -1,8 +1,8 @@
 require([
 	'angular',
-	'angularCookies',
-	'angularTranslate',
-	'angularRoute',
+	'angular-cookies',
+	'angular-translate',
+	'angular-ui-router',
 	'boot',
 	'router',
 	'translater'
@@ -10,7 +10,7 @@ require([
 	ng,
 	ngCookies,
 	ngTrans,
-	ngRoute,
+	ngUIRouter,
 	boot,
 	router,
 	translater
@@ -19,16 +19,16 @@ require([
 		settings=boot.settings;
 	
 	app.config([
-		'$routeProvider',
-		'$locationProvider',
+		'$stateProvider',
+		'$urlRouterProvider',
 		'$controllerProvider',
 		'$compileProvider',
 		'$filterProvider',
 		'$provide',
 		'$translateProvider',
 		function(
-			$routeProvider,
-			$locationProvider,
+			$stateProvider,
+			$urlRouterProvider,
 			$controllerProvider,
 			$compileProvider,
 			$filterProvider,
@@ -46,7 +46,7 @@ require([
 			app.constant = $provide.constant;
 			app.decorator = $provide.decorator;
 			//路由配置启动
-			router.route($routeProvider,$locationProvider);
+			router.route($stateProvider,$urlRouterProvider);
 			//i18n
 			translater.config($translateProvider);
 

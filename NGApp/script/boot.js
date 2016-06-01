@@ -2,16 +2,14 @@ define([
 	'require',
 	'settings',
 	'angular',
-	'angularCookies',
-	'angularTranslate',
-	'angularRoute'
+	'angular-ui-bootstrap',
+	'angular-cookies',
+	'angular-translate',
+	'angular-ui-router'
 ],function(
 	require,
 	settings,
-	ng,
-	ngCookies,
-	ngTrans,
-	ngRoute
+	ng
 ){
 
 	var appName=settings.info.appName;
@@ -29,7 +27,7 @@ define([
 	});
 
 	//声明主模块
-	var app=ng.module(appName,['ngRoute','ngCookies','pascalprecht.translate']);
+	var app=ng.module(appName,['ui.bootstrap','ui.router','ngCookies','pascalprecht.translate']);
 
 	return {
 		app:app,

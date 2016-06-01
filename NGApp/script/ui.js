@@ -1,18 +1,18 @@
 define(['jquery'],function($){
 	return {
 		naviStatus:function(id){
-			$('.menu .item').siblings().removeClass('active');
-			$('.menu .item[data-navi-id='+id+']').addClass('active');
+			$('.navbar .nav li').siblings().removeClass('active');
+			$('.navbar .nav li[data-navi-id='+id+']').addClass('active');
 		},
 
 		translateStatus:function(lang){
-			$('.ui.button[data-trans-lang="'+lang+'"]').addClass('primary').siblings().removeClass('primary');
+			$('.btn[data-trans-lang="'+lang+'"]').addClass('btn-primary').siblings().removeClass('btn-primary');
 		},
 
 		loader:function(){
-			var loader=$('body>.ui.dimmer:has(.loader)');
+			var loader=$('body>.masker');
 			function show(){
-				loader.fadeIn();
+				loader.stop().fadeIn();
 			}
 			function hide(){
 				loader.fadeOut();

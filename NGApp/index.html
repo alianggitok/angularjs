@@ -4,37 +4,40 @@
 <head>
 	<title>NGApp</title>
 	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalabel=no">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalabel=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" href="style/common.css">
-	<link rel="stylesheet" href="lib/semantic-ui-2.1.8/semantic.min.css">
+	<link rel="stylesheet" href="lib/bootstrap-3.3.5/css/bootstrap.min.css">
 </head>
 
 <body ng-controller="mainController">
 
-	<div class="ui container basic segment">
-		<div class="ui header large">
-			{{appInfo.appText}} v{{appInfo.version}}
-			<div class="ui mini buttons right floated">
-				<button class="ui button" ng-click="changeLanguage('en')" data-trans-lang="en">English</button>
-				<div class="or"></div>
-				<button class="ui button" ng-click="changeLanguage('zh_CN')" data-trans-lang="zh_CN">中文</button>
+	<div class="container">
+		<div class="page-header clearfix">
+			<h1 class="pull-left">{{appInfo.appText}} <small>v{{appInfo.version}}</small></h1>
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-sm" ng-click="changeLanguage('en')" data-trans-lang="en">English</button>
+				<button type="button" class="btn btn-sm" ng-click="changeLanguage('zh_CN')" data-trans-lang="zh_CN">中文</button>
 			</div>
 		</div>
-		<div class="ui menu">
-			<a ng-href="#{{item.url}}" data-navi-id="{{item.id}}" class="item" ng-repeat="item in navi">{{item.i18nID|translate}}</a>
+
+		<div class="navbar navbar-default">
+			<div class="container">
+				<ul class="nav navbar-nav">
+					<li ng-repeat="item in navi" data-navi-id="{{item.id}}"><a ui-sref="{{item.name}}">{{item.i18nID|translate}}</a></li>
+				</ul>
+			</div>
 		</div>
 		
-		<div class="ui segment" ng-view></div>
+		<div ui-view></div>
 	</div>
 
 
-
-
-	<div class="ui active dimmer">
-		<div class="ui text loader"><span translate="loading"></span></div>
+	<div class="masker">
+		<div class="loader text-center"><span translate="loading"></span></div>
 	</div>
 
 	<script src="lib/requirejs-2.2.0/require.min.js"></script>

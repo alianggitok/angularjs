@@ -13,7 +13,7 @@ define(function(){
 		lang={
 			cookieKey:'i18n',
 			langs:['zh_CN','en'],
-			default:'zh_CN',
+			defaultLang:'zh_CN',
 			filePrefix:'',
 			fileSuffix:'.js'
 		},

@@ -36,7 +36,7 @@ define(['require','boot','ui'],function(require,boot,ui){
 	function config(translateProvider){
 		translateProvider.useLoader(asyncLoaderService);//注入translateAsyncLoader服务
 		translateProvider.useSanitizeValueStrategy('escaped');//字符转义策略
-//		translateProvider.preferredLanguage(settings.lang.default);//default
+//		translateProvider.preferredLanguage(settings.lang.defaultLang);//defaultLang
 		translateProvider.determinePreferredLanguage();//根据浏览器语言自动判断当前语言
 //		translateProvider.fallbackLanguage(['en']);//后备，其中的语言会依次预先加载，当首选不可用时，这里的顶上
 	}

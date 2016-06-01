@@ -8,11 +8,13 @@
 			'text':['lib/requirejs-2.2.0/text'],
 			//lib
 			'angular':['lib/angular-1.2.29/angular'],
-			'angularCookies':['lib/angular-1.2.29/angular-cookies.min'],
-			'angularRoute':['lib/angular-1.2.29/angular-route.min'],
-			'angularTranslate':['lib/angular-translate-2.9.0.1/angular-translate.min'],
-			'jquery':['lib/jquery-1.12.1.min'],
-			'semantic-ui':['lib/semantic-ui-2.1.8/semantic.min'],
+			'angular-cookies':['lib/angular-1.2.29/angular-cookies.min'],
+			'angular-translate':['lib/angular-translate-2.9.0.1/angular-translate.min'],
+			'angular-ui-router':['lib/angular-ui-router-0.2.18/angular-ui-router.min'],
+			'angular-ui-bootstrap':['lib/angular-ui-bootstrap-0.12.0/ui-bootstrap-tpls-0.12.0.min'],
+			'jquery':['lib/jquery-1.12.4/jquery-1.12.4.min'],
+			'bootstrap':['lib/bootstrap-3.3.5/js/bootstrap.min'],
+			'respond':['lib/respond-1.4.2/respond.min'],
 			//app
 			'settings':['settings'],
 			'boot':['script/boot'],
@@ -28,20 +30,23 @@
 			'angular':{
 				exports:'angular'
 			},
-			'angularCookies':{
+			'angular-cookies':{
 				deps:['angular']
 			},
-			'angularTranslate':{
+			'angular-translate':{
 				deps:['angular']
 			},
-			'angularRoute':{
+			'angular-ui-router':{
 				deps:['angular']
 			},
-			'semantic-ui':{
-				deps:['jquery']
+			'angular-ui-bootstrap':{
+				deps:['angular']
+			},
+			'bootstrap':{
+				deps:['jquery','respond']
 			},
 			'ui':{
-				deps:['jquery','semantic-ui']
+				deps:['jquery','bootstrap']
 			}
 		},
 		deps:['app','ui'],
