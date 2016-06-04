@@ -56,20 +56,20 @@
 		app.provider('serviceProvider',function(){
 			//功能最全的建立service的方法
 			var service={
-				data:{//除$get之外的内容，可以在config里注入时做配置修改
-					msg:'111'
-				},
-				$get:function(){//$get是ng内定的，用来暴露内容，参数可以用来注入模块
-					return {
-						do:function(){
-							console.log('provider');
-						},
-						msg:function(){
-							return service.data.msg;
-						}
-					};
-				}
-			};
+					data:{//除$get之外的内容，可以在config里注入时做配置修改
+						msg:'111'
+					},
+					$get:function(){//$get是ng内定的，用来暴露内容，参数可以用来注入模块
+						return {
+							do:function(){
+								console.log('provider');
+							},
+							msg:function(){
+								return service.data.msg;
+							}
+						};
+					}
+				};
 
 			return service;
 		});

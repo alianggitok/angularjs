@@ -10,13 +10,16 @@
 			'angular':['lib/angular-1.2.29/angular'],
 			'angular-cookies':['lib/angular-1.2.29/angular-cookies.min'],
 			'angular-translate':['lib/angular-translate-2.9.0.1/angular-translate.min'],
+			'angular-translate-loader-partial':['lib/angular-translate-loader-partial-2.11.0/angular-translate-loader-partial.min'],
 			'angular-ui-router':['lib/angular-ui-router-0.2.18/angular-ui-router.min'],
 			'angular-ui-bootstrap':['lib/angular-ui-bootstrap-0.12.0/ui-bootstrap-tpls-0.12.0.min'],
+			'angular-validation':['lib/angular-validation-1.2.6/angular-validation.min'],
 			'jquery':['lib/jquery-1.12.4/jquery-1.12.4.min'],
 			'bootstrap':['lib/bootstrap-3.3.5/js/bootstrap.min'],
 			'respond':['lib/respond-1.4.2/respond.min'],
 			//app
 			'settings':['settings'],
+			'util':['script/util'],
 			'boot':['script/boot'],
 			'app':['script/app'],
 			'ui':['script/ui'],
@@ -36,10 +39,16 @@
 			'angular-translate':{
 				deps:['angular']
 			},
+			'angular-translate-loader-partial':{
+				deps:['angular-translate']
+			},
 			'angular-ui-router':{
 				deps:['angular']
 			},
 			'angular-ui-bootstrap':{
+				deps:['angular']
+			},
+			'angular-validation':{
 				deps:['angular']
 			},
 			'bootstrap':{
@@ -47,9 +56,12 @@
 			},
 			'ui':{
 				deps:['jquery','bootstrap']
+			},
+			'util':{
+				deps:['jquery']
 			}
 		},
-		deps:['app','ui'],
+		deps:['app','util','ui'],
 //		urlArgs: 'timestamp_'+(new Date()).getTime(),//not load cache
 		waitSeconds:60//unit second
 	});

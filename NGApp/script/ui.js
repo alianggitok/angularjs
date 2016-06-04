@@ -1,8 +1,10 @@
 define(['jquery'],function($){
 	return {
-		naviStatus:function(id){
-			$('.navbar .nav li').siblings().removeClass('active');
-			$('.navbar .nav li[data-navi-id='+id+']').addClass('active');
+		naviStatus:function(tag){
+			var items=$('.navbar .nav li'),
+				activeItem=items.has('a[ui-sref="'+tag+'"]');
+			items.removeClass('active');
+			activeItem.addClass('active');
 		},
 
 		translateStatus:function(lang){
@@ -12,7 +14,7 @@ define(['jquery'],function($){
 		loader:function(){
 			var loader=$('body>.masker');
 			function show(){
-				loader.stop().fadeIn();
+				loader.stop(false,true).fadeIn();
 			}
 			function hide(){
 				loader.fadeOut();

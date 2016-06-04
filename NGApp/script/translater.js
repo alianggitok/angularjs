@@ -4,62 +4,81 @@ define(['require','boot','ui'],function(require,boot,ui){
 		rootPath=settings.path.root,
 		i18nPath=settings.path.i18n,
 		langCookieKey=settings.lang.cookieKey,
-		asyncLoaderService='translateAsyncLoader',
+//		asyncLoaderService='translateAsyncLoader',
 //		saveTransService='translateStorage',
-		langs=settings.lang.langs,
+//		langs=settings.lang.langs,
 		langFilePrefix=settings.lang.filePrefix,
 		langFileSuffix=settings.lang.fileSuffix,
-		langFileURL=function(i){
-			return rootPath+i18nPath+'/'+langFilePrefix+langs[i]+langFileSuffix;
+		langUrlArgs=function(){
+			return 'timestamp_'+(new Date()).getTime();
 		};
+//		langFileURL=function(i){
+//			return rootPath+i18nPath+'/'+langFilePrefix+langs[i]+langFileSuffix;
+//		};
 
-	//async loader service
-	app.factory(asyncLoaderService,['$q',function($q){
-		function load(filePath, deferred) {
-			require([filePath], function (trans) {
-				deferred.resolve(trans);
-				console.log('i18n file "' + filePath + '" loaded!');
-			});
-		}
-		return function(options){
-			var deferred=$q.defer();
-			for(var i=0,n=langs.length;i<n;i++){
-				if(options.key===langs[i]){
-					load(langFileURL(i),deferred);
-				}
-			}
-			return deferred.promise;
-		};
-	}]);
+	//自定义的异步国际化文件读取服务
+//	app.factory(asyncLoaderService,['$q',function($q){
+//		function load(filePath, deferred) {
+//			require([filePath], function (trans) {
+//				deferred.resolve(trans);
+//				app.debug.log('i18n file "' + filePath + '" loaded!');
+//			});
+//		}
+//		return function(options){
+//			var deferred=$q.defer();
+//			for(var i=0,n=langs.length;i<n;i++){
+//				if(options.key===langs[i]){
+//					load(langFileURL(i),deferred);
+//				}
+//			}
+//			return deferred.promise;
+//		};
+//	}]);
 
 	//i18n配置
-	function config(translateProvider){
-		translateProvider.useLoader(asyncLoaderService);//注入translateAsyncLoader服务
+	function config(translateProvider,translatePartialLoaderProvider){
+		translatePartialLoaderProvider.addPart('index');//首屏
+		translateProvider.useLoader('$translatePartialLoader',{//注入translate file loader服务
+			urlTemplate:rootPath+i18nPath+'/{part}/'+langFilePrefix+'{lang}'+langFileSuffix+'?'+langUrlArgs()
+		});
 		translateProvider.useSanitizeValueStrategy('escaped');//字符转义策略
-//		translateProvider.preferredLanguage(settings.lang.defaultLang);//defaultLang
-		translateProvider.determinePreferredLanguage();//根据浏览器语言自动判断当前语言
+		translateProvider.preferredLanguage(settings.lang.defaultLang);//default language
+//		translateProvider.determinePreferredLanguage();//根据浏览器语言自动判断当前语言
 //		translateProvider.fallbackLanguage(['en']);//后备，其中的语言会依次预先加载，当首选不可用时，这里的顶上
 	}
 
 	//初始化
 	function init(translate,cookieStore){
-		var translateInCookies=cookieStore.get(langCookieKey);
-		translate.use(translateInCookies);
+		var langInCookies=cookieStore.get(langCookieKey);
+		translate.use(langInCookies);
+		translate.refresh();
 	}
 
 	//事件
-	function events(scope,rootScope,translate,cookieStore){
+	function events(scope,rootScope,cookieStore,translate,translatePartialLoader){
 		scope.changeLanguage=function(lang){
-			console.info('switching the language to "'+lang+'"...');
 			translate.use(lang);
 		};
 
-		rootScope.$on('$translateChangeSuccess',function(){
-			var lang=translate.use();
-			ui.translateStatus(lang);
-			console.log('language "'+lang+'" switched!');
-			cookieStore.put(langCookieKey,lang);
-			console.log('put in cookies:',langCookieKey,lang);
+		rootScope.$on('$translateChangeStart',function(event,lang){
+			app.debug.info('[TRANSLATER] switching the language to "'+lang.language+'"...');
+		});
+		
+		rootScope.$on('$translateLoadingStart',function(event,lang){
+			app.debug.log('[TRANSLATER] language "'+lang.language+'" file loading...');
+		});
+		
+		rootScope.$on('$translateChangeSuccess',function(event,lang){
+			var language=lang.language;
+			ui.translateStatus(language);
+			app.debug.log('[TRANSLATER] language "'+language+'" switched!');
+			cookieStore.put(langCookieKey,language);
+			app.debug.log('[TRANSLATER] put in cookies:',langCookieKey,language);
+		});
+		
+		rootScope.$on('$translatePartialLoaderStructureChanged',function(event,route){
+			translate.refresh();
+			app.debug.log('[TRANSLATER] "'+route+'" translate refreshed');
 		});
 
 	}

@@ -1,75 +1,97 @@
 define(['require','boot','ui'],function(require,boot,ui){
-	var app=boot.app,
-		settings=boot.settings,
-		routes=settings.routes;
+	var app=boot.app;
 	
 	//路由配置
-	function route($stateProvider,$urlRouteProvider){
+	function route(stateProvider,urlRouterProvider,locationProvider){
 		//是否以 pushState 方式来进行路由
-//		$urlRouteProvider.html5Mode(false);
+		locationProvider.html5Mode(false);
 
 		var resolve = {
-				controller: function (controllerFile, controllerName) {
-					if(!controllerFile){
-						return;
-					}
-					return ['$q','$rootScope',function ($q, $rootScope) {
-						var deferred = $q.defer();
-						require([controllerFile], function (controller) {
-							app.controller(controllerName, controller);
-							$rootScope.$apply(deferred.resolve);
-//							deferred.resolve(controller);
-							console.log(controllerName+' registed!');
-						});
-						return deferred.promise;
-					}];
+			controller: function (controllerFile, controllerName,transPartName) {
+				if(!controllerFile){
+					return;
 				}
-			};
-
+				return ['$q','$rootScope','$state','$translate','$translatePartialLoader',function ($q, $rootScope,$state,$translate,$translatePartialLoader) {
+					var deferred = $q.defer();
+					require([controllerFile], function (controller) {
+						app.controller(controllerName, controller);
+						$rootScope.$apply(deferred.resolve);
+						app.debug.log('[ROUTER] '+controllerName+' registed!');
+						
+						$translatePartialLoader.addPart(transPartName);
+						
+						ui.naviStatus($state.current.name);
+						app.debug.log('[UI] navigation state change');
+					});
+					return deferred.promise;
+				}];
+			}
+		};
 		
-		for(var i=0,len=routes.length;i<len;i+=1){
-			$stateProvider.state(routes[i].name,{
-				url:routes[i].url,
-				templateUrl:routes[i].templateUrl,
-				controller:routes[i].controllerName,
-				id:routes[i].id,//自定义的属性
-				resolve:{
-					controller:resolve.controller(routes[i].controllerFile,routes[i].controllerName)
+		//routes
+		stateProvider.state('index',{
+			url:'/index',
+			views:{
+				'header':{
+					templateUrl:'/view/partial/header/view.html',
+					controller:'headerController',
+					resolve:{
+						controller:resolve.controller('/view/partial/header/controller.js','headerController','partial/header')
+					}
+				},
+				'body':{
+					templateUrl:'/view/partial/body/view.html'
+				},
+				'footer':{
+					templateUrl:'/view/partial/footer/view.html'
 				}
-			});
-		}
+			}
+		}).state('index.one',{
+			url:'/one',
+			views:{
+				'content@index':{
+					templateUrl:'/view/one/view.html',
+					controller:'oneController',
+					resolve:{
+						controller:resolve.controller('/view/one/controller.js','oneController','one')
+					}
+				}
+			}
+		}).state('index.two',{
+			url:'/two',
+			views:{
+				'content@index':{
+					templateUrl:'/view/two/view.html',
+					controller:'twoController',
+					resolve:{
+						controller:resolve.controller('/view/two/controller.js','twoController','two')
+					}
+				}
+			}
+		});
+		
 
-		//配置默认页、404、其他
-//		$urlRouteProvider.when('/',{
-//			templateUrl:routes[0].templateUrl,
-//			controller:routes[0].controllerName,
-////			id:routes[0].id,//自定义的属性
-//			resolve:{
-//				controller:resolve.controller(routes[0].controllerFile,routes[0].controllerName)
-//			}
-//		}).otherwise({
-//			templateUrl:settings.path.view+'/404.html'
-//		});
+		//其他跳转
+		urlRouterProvider.otherwise('/index/one');
+
 
 	}
 	
 	//路由事件
-	function events(rootScope){
-		var loader=ui.loader();
-		rootScope.$on('$stateChangeStart',function(event,next,current){
+	function events(rootScope,loader){
+		rootScope.$on('$stateChangeStart',function(event,toState,toParams,fromState,fromParams){
 			loader.show();
-			console.info('view "'+next.templateUrl+'" is loading...');
+			app.debug.info('[ROUTER] route to "'+toState.name+'"...');
 		});
-		rootScope.$on('$stateChangeSuccess',function(event,current,previous){
-			ui.naviStatus(current.id);
-			console.log('view "'+current.templateUrl+'" load success!');
+		rootScope.$on('$stateChangeSuccess',function(event,toState,toParams,fromState,fromParams){
+			app.debug.log('[ROUTER] route to "'+toState.name+'" success!');
 		});
-//		rootScope.$on('routeChangeError',function(){
-//			console.log('view load failed!');
-//		});
-		rootScope.$on('$viewContentLoaded',function(event){
+		rootScope.$on('$stateChangeError',function(){
+			app.debug.error('route failed!');
+		});
+		rootScope.$on('$viewContentLoaded',function(event,viewName){
 			loader.hide();
-			console.log('ng-view loaded!');
+			app.debug.log('[ROUTER] view "'+viewName+'" loaded!');
 		});
 	}
 
