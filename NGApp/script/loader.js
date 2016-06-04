@@ -7,24 +7,27 @@
 			'domReady':['lib/requirejs-2.2.0/domReady'],
 			'text':['lib/requirejs-2.2.0/text'],
 			//lib
+			'es5-shim':['lib/es5-shim-4.5.8/es5-shim.min'],
 			'angular':['lib/angular-1.2.29/angular'],
 			'angular-cookies':['lib/angular-1.2.29/angular-cookies.min'],
 			'angular-translate':['lib/angular-translate-2.9.0.1/angular-translate.min'],
 			'angular-translate-loader-partial':['lib/angular-translate-loader-partial-2.11.0/angular-translate-loader-partial.min'],
 			'angular-ui-router':['lib/angular-ui-router-0.2.18/angular-ui-router.min'],
 			'angular-ui-bootstrap':['lib/angular-ui-bootstrap-0.12.0/ui-bootstrap-tpls-0.12.0.min'],
-			'angular-validation':['lib/angular-validation-1.2.6/angular-validation.min'],
+			'angular-validation':['lib/angular-validation-1.4.1/angular-validation.min'],
+			'angular-validation-rule':['lib/angular-validation-1.4.1/angular-validation-rule.min'],
 			'jquery':['lib/jquery-1.12.4/jquery-1.12.4.min'],
 			'bootstrap':['lib/bootstrap-3.3.5/js/bootstrap.min'],
 			'respond':['lib/respond-1.4.2/respond.min'],
 			//app
 			'settings':['settings'],
 			'util':['script/util'],
-			'boot':['script/boot'],
-			'app':['script/app'],
 			'ui':['script/ui'],
+			'formValidator':['script/formValidator'],
+			'boot':['script/boot'],
 			'router':['script/router'],
-			'translater':['script/translater']
+			'translater':['script/translater'],
+			'main':['script/main']
 		},
 		shim: {
 			'jquery':{
@@ -49,7 +52,13 @@
 				deps:['angular']
 			},
 			'angular-validation':{
-				deps:['angular']
+				deps:['angular','es5-shim']
+			},
+			'angular-validation-rule':{
+				deps:['angular-validation']
+			},
+			'formValidator':{
+				deps:['angular-validation','angular-validation-rule']
 			},
 			'bootstrap':{
 				deps:['jquery','respond']
@@ -61,7 +70,7 @@
 				deps:['jquery']
 			}
 		},
-		deps:['app','util','ui'],
+		deps:['es5-shim','main','ui','util'],
 //		urlArgs: 'timestamp_'+(new Date()).getTime(),//not load cache
 		waitSeconds:60//unit second
 	});

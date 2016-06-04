@@ -7,7 +7,9 @@ define([
 	'angular-cookies',
 	'angular-translate',
 	'angular-translate-loader-partial',
-	'angular-ui-router'
+	'angular-ui-router',
+	'angular-validation',
+	'angular-validation-rule'
 ],function(
 	require,
 	settings,
@@ -31,10 +33,10 @@ define([
 	});
 
 	//声明主模块
-	var app=ng.module(appName,['ui.bootstrap','ui.router','ngCookies','pascalprecht.translate']);
+	var app=ng.module(appName,['ui.bootstrap','ui.router','ngCookies','pascalprecht.translate','validation','validation.rule']);
 	
 	app.debug=debug;
-
+	
 	return {
 		app:app,
 		settings:settings

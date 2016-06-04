@@ -2,11 +2,13 @@ require([
 	'boot',
 	'router',
 	'translater',
+	'formValidator',
 	'ui'
 ],function(
 	boot,
 	router,
 	translater,
+	formValidator,
 	ui
 ){
 	var app=boot.app;
@@ -21,6 +23,7 @@ require([
 		'$provide',
 		'$translateProvider',
 		'$translatePartialLoaderProvider',
+		'$validationProvider',
 		function(
 			$stateProvider,
 			$urlRouterProvider,
@@ -30,7 +33,8 @@ require([
 			$filterProvider,
 			$provide,
 			$translateProvider,
-			$translatePartialLoaderProvider
+			$translatePartialLoaderProvider,
+			$validationProvider
 		){
 			//为ng支持amd而配置
 			app.controller = $controllerProvider.register;
@@ -46,6 +50,8 @@ require([
 			router.route($stateProvider,$urlRouterProvider,$locationProvider);
 			//i18n
 			translater.config($translateProvider,$translatePartialLoaderProvider);
+			//表单验证
+			formValidator.config($validationProvider);
 
 		}
 	]);

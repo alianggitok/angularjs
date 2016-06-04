@@ -1,7 +1,7 @@
 //settings
 define(function(){
 	return {
-		debug:true,
+		debug:false,
 		info:{
 			appName:'ngapp',
 			appText:'NGAPP',

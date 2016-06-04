@@ -28,4 +28,6 @@ define(['jquery'],function($){
 			};
 		}
 	};
+	
 });
+
