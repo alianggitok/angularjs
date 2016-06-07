@@ -5,7 +5,7 @@ define(function(){
 		info:{
 			appName:'ngapp',
 			appText:'NGAPP',
-			version:'0.01'
+			version:'0.02'
 		},
 		path:{
 			root:'',

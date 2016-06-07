@@ -8,6 +8,7 @@
 			'text':['lib/requirejs-2.2.0/text'],
 			//lib
 			'es5-shim':['lib/es5-shim-4.5.8/es5-shim.min'],
+			'json':['lib/json-3.3.2/json3.min'],
 			'angular':['lib/angular-1.2.29/angular'],
 			'angular-cookies':['lib/angular-1.2.29/angular-cookies.min'],
 			'angular-translate':['lib/angular-translate-2.9.0.1/angular-translate.min'],
@@ -70,7 +71,7 @@
 				deps:['jquery']
 			}
 		},
-		deps:['es5-shim','main','ui','util'],
+		deps:['es5-shim','json','main','ui','util'],
 //		urlArgs: 'timestamp_'+(new Date()).getTime(),//not load cache
 		waitSeconds:60//unit second
 	});

@@ -6,38 +6,46 @@ define(['require','boot','ui'],function(require,boot,ui){
 		//是否以 pushState 方式来进行路由
 		locationProvider.html5Mode(false);
 
-		var resolve = {
-			controller: function (controllerFile, controllerName,transPartName) {
+		var controllerRequire=function (controllerName,controllerFile) {
 				if(!controllerFile){
 					return;
 				}
-				return ['$q','$rootScope','$state','$translate','$translatePartialLoader',function ($q, $rootScope,$state,$translate,$translatePartialLoader) {
+				return ['$q','$rootScope','$state',function ($q, $rootScope,$state) {
 					var deferred = $q.defer();
 					require([controllerFile], function (controller) {
 						app.controller(controllerName, controller);
 						$rootScope.$apply(deferred.resolve);
 						app.debug.log('[ROUTER] '+controllerName+' registed!');
-						
-						$translatePartialLoader.addPart(transPartName);
-						
+
 						ui.naviStatus($state.current.name);
 						app.debug.log('[UI] navigation state change');
 					});
 					return deferred.promise;
 				}];
-			}
-		};
+			},
+			controllerRegister=function(controllerName,transPartName){
+				return ['$state','$translatePartialLoader',function($state,$translatePartialLoader){
+					app.debug.log('[ROUTER] '+controllerName+' registed!');
+					
+					$translatePartialLoader.addPart(transPartName);
+					
+					ui.naviStatus($state.current.name);
+					app.debug.log('[UI] navigation state change');
+					return controllerName;
+				}];
+			};
 		
 		//routes
 		stateProvider.state('index',{
-			url:'/index',
+			url:'/',
+			abstract: true,
 			views:{
 				'header':{
 					templateUrl:'/view/partial/header/view.html',
-					controller:'headerController',
 					resolve:{
-						controller:resolve.controller('/view/partial/header/controller.js','headerController','partial/header')
-					}
+						controller:controllerRequire('headerController','/view/partial/header/controller.js')
+					},
+					controllerProvider:controllerRegister('headerController','partial/header')
 				},
 				'body':{
 					templateUrl:'/view/partial/body/view.html'
@@ -47,32 +55,33 @@ define(['require','boot','ui'],function(require,boot,ui){
 				}
 			}
 		}).state('index.one',{
-			url:'/one',
+			url:'^/one?{id:[0-9]}{name}',
 			views:{
-				'content@index':{
+				'content@index':{//viewname@statename
 					templateUrl:'/view/one/view.html',
-					controller:'oneController',
 					resolve:{
-						controller:resolve.controller('/view/one/controller.js','oneController','one')
-					}
+						controller:controllerRequire('oneController','/view/one/controller.js')
+					},
+					controllerProvider:controllerRegister('oneController','one')
 				}
 			}
 		}).state('index.two',{
-			url:'/two',
+			url:'^/two',
 			views:{
 				'content@index':{
 					templateUrl:'/view/two/view.html',
-					controller:'twoController',
 					resolve:{
-						controller:resolve.controller('/view/two/controller.js','twoController','two')
-					}
+						controller:controllerRequire('twoController','/view/two/controller.js')
+					},
+					controllerProvider:controllerRegister('twoController','two')
 				}
 			}
 		});
 		
 
 		//其他跳转
-		urlRouterProvider.otherwise('/index/one');
+		urlRouterProvider.when('/','^/one');
+		urlRouterProvider.otherwise('/one');
 
 
 	}
