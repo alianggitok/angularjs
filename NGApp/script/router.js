@@ -10,15 +10,12 @@ define(['require','boot','ui'],function(require,boot,ui){
 				if(!controllerFile){
 					return;
 				}
-				return ['$q','$rootScope','$state',function ($q, $rootScope,$state) {
+				return ['$q','$rootScope',function ($q, $rootScope) {
 					var deferred = $q.defer();
 					require([controllerFile], function (controller) {
 						app.controller(controllerName, controller);
 						$rootScope.$apply(deferred.resolve);
 						app.debug.log('[ROUTER] '+controllerName+' registed!');
-
-						ui.naviStatus($state.current.name);
-						app.debug.log('[UI] navigation state change');
 					});
 					return deferred.promise;
 				}];
@@ -28,9 +25,6 @@ define(['require','boot','ui'],function(require,boot,ui){
 					app.debug.log('[ROUTER] '+controllerName+' registed!');
 					
 					$translatePartialLoader.addPart(transPartName);
-					
-					ui.naviStatus($state.current.name);
-					app.debug.log('[UI] navigation state change');
 					return controllerName;
 				}];
 			};

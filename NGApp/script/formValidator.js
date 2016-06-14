@@ -7,7 +7,7 @@ define(['require','boot','ui','jquery'],function(require,boot,ui,$){
 			errorClass='has-feedback has-error',
 			successIcon='<span class="glyphicon glyphicon-ok form-control-feedback"></span>',
 			errorIcon='<span class="glyphicon glyphicon-remove form-control-feedback"></span>';
-		
+			
 		validationProvider.showSuccessMessage = false;
 		validationProvider.showErrorMessage = true;
 		

@@ -4,36 +4,11 @@ define(['require','boot','ui'],function(require,boot,ui){
 		rootPath=settings.path.root,
 		i18nPath=settings.path.i18n,
 		langCookieKey=settings.lang.cookieKey,
-//		asyncLoaderService='translateAsyncLoader',
-//		saveTransService='translateStorage',
-//		langs=settings.lang.langs,
 		langFilePrefix=settings.lang.filePrefix,
 		langFileSuffix=settings.lang.fileSuffix,
 		langUrlArgs=function(){
 			return 'timestamp_'+(new Date()).getTime();
 		};
-//		langFileURL=function(i){
-//			return rootPath+i18nPath+'/'+langFilePrefix+langs[i]+langFileSuffix;
-//		};
-
-	//自定义的异步国际化文件读取服务
-//	app.factory(asyncLoaderService,['$q',function($q){
-//		function load(filePath, deferred) {
-//			require([filePath], function (trans) {
-//				deferred.resolve(trans);
-//				app.debug.log('i18n file "' + filePath + '" loaded!');
-//			});
-//		}
-//		return function(options){
-//			var deferred=$q.defer();
-//			for(var i=0,n=langs.length;i<n;i++){
-//				if(options.key===langs[i]){
-//					load(langFileURL(i),deferred);
-//				}
-//			}
-//			return deferred.promise;
-//		};
-//	}]);
 
 	//i18n配置
 	function config(translateProvider,translatePartialLoaderProvider){

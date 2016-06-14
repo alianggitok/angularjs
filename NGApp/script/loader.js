@@ -14,14 +14,14 @@
 			'angular-translate':['lib/angular-translate-2.9.0.1/angular-translate.min'],
 			'angular-translate-loader-partial':['lib/angular-translate-loader-partial-2.11.0/angular-translate-loader-partial.min'],
 			'angular-ui-router':['lib/angular-ui-router-0.2.18/angular-ui-router.min'],
-			'angular-ui-bootstrap':['lib/angular-ui-bootstrap-0.12.0/ui-bootstrap-tpls-0.12.0.min'],
+			'angular-ui-bootstrap':['lib/angular-ui-bootstrap-0.12.1/ui-bootstrap-tpls-0.12.1.min'],
 			'angular-validation':['lib/angular-validation-1.4.1/angular-validation.min'],
 			'angular-validation-rule':['lib/angular-validation-1.4.1/angular-validation-rule.min'],
 			'jquery':['lib/jquery-1.12.4/jquery-1.12.4.min'],
 			'bootstrap':['lib/bootstrap-3.3.5/js/bootstrap.min'],
 			'respond':['lib/respond-1.4.2/respond.min'],
 			//app
-			'settings':['settings'],
+			'settings':['script/settings'],
 			'util':['script/util'],
 			'ui':['script/ui'],
 			'formValidator':['script/formValidator'],
@@ -53,22 +53,13 @@
 				deps:['angular']
 			},
 			'angular-validation':{
-				deps:['angular','es5-shim']
+				deps:['angular']
 			},
 			'angular-validation-rule':{
 				deps:['angular-validation']
 			},
-			'formValidator':{
-				deps:['angular-validation','angular-validation-rule']
-			},
 			'bootstrap':{
 				deps:['jquery','respond']
-			},
-			'ui':{
-				deps:['jquery','bootstrap']
-			},
-			'util':{
-				deps:['jquery']
 			}
 		},
 		deps:['es5-shim','json','main','ui','util'],

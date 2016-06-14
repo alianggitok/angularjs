@@ -1,12 +1,5 @@
-define(['jquery'],function($){
+define(['jquery','bootstrap'],function($,bs){
 	return {
-		naviStatus:function(tag){
-			var items=$('.navbar .nav li'),
-				activeItem=items.has('a[ui-sref="'+tag+'"]');
-			items.removeClass('active');
-			activeItem.addClass('active');
-		},
-
 		translateStatus:function(lang){
 			$('.btn[data-trans-lang="'+lang+'"]').addClass('btn-primary').siblings().removeClass('btn-primary');
 		},
